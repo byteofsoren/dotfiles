@@ -90,7 +90,14 @@ for s = 1, screen.count() do
     tags[s] = awful.tag({ 1, 2, 3, 4, 5, 6, 7, 8, 9 }, s, layouts[1])
 end
 -- }}}
-
+-- Script executer function.
+function sh_exec(command)
+    -- Observe this functinon is stupid because it don't checks if the script
+    -- is running.
+    awful.util.spawn_with_shell(command)
+end
+-- Autostart functions.
+sh_exec("/home/r00tr4t/bin/autostart/keyboardmod.sh")
 -- {{{ Menu
 -- Create a laucher widget and a main menu
 myawesomemenu = {
@@ -137,6 +144,7 @@ skolanProgarm = {
     { "Docear", "/usr/bin/docear", "/home/r00tr4t/.config/awesome/icons/www.docear.org.ico" },
     { "Rednotebook", "/home/r00tr4t/bin/start-note.sh" },
     { "CherryTree","cherrytree"},
+    { "Ktikz-Editor","ktikz"},
     { "MasterPDFEditor", "/home/r00tr4t/bin/masterpdf", "/home/r00tr4t/.config/awesome/icons/Graphicrating-Koloria-File-PDF-Acrobat.ico" }
 }
 
