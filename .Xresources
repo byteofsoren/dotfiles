@@ -116,7 +116,7 @@ URxvt.tabbed.title: no
 !URxvt.keysym.M-l: perl:tabbedex:next_tab
 
 ! for clipboard
-URxvt.keysym.C-c: perl:clipboard:copy
+!URxvt.keysym.C-c: perl:clipboard:copy
 URxvt.keysym.C-v: perl:clipboard:paste
 
 ! for keyboard-select
@@ -129,3 +129,6 @@ Xcursor.theme: DMZ-White
 URxvt.cursorBlink: true
 URxvt.cursorColor: #657b83
 URxvt.cursorUnderline: true
+! Transparecy settings
+urxvt*transparent: true
+urxvt*shading: 30

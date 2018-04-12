@@ -6,8 +6,10 @@
 
 #Alias
 alias ls='ls --color=auto'
-alias cdA='cd ~/.config/awesome'
-export wine32=”WINEPREFIX=' /home/$username/.wine32'”
+#alias cdA='cd ~/.config/awesome'
+#export wine32=”WINEPREFIX=' /home/$username/.wine32'”
+#export XDG_RUNTIME_DIR=/run/user/`id -u`
+#export LD_LIBRARY_PATH='/usr/lib/python3.6/site-packages/vtK':$LD_LIBRARY_PATH
 
 # batery meter 
 

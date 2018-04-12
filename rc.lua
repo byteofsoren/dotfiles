@@ -98,6 +98,7 @@ function sh_exec(command)
 end
 -- Autostart functions.
 sh_exec("/home/r00tr4t/bin/autostart/keyboardmod.sh")
+sh_exec("/usr/bin/compton -b")
 -- {{{ Menu
 -- Create a laucher widget and a main menu
 myawesomemenu = {
@@ -135,12 +136,18 @@ mySettings = {
 	{ "power savings", powersave, "/usr/share/awesome/icons/icons_18x18/png/grey/normal/005_06.png" }
 
 }
+vivado = {
+   {"vivado-ide", "/opt/Xilinx/Vivado/2017.3/bin/vivado", "/opt/Xilinx/Vivado/2017.3/doc/images/vivado_logo.png"}
+}
+
 myPrograms = {
     { "Remote transmission GUI", "/home/r00tr4t/bin/transgui" },
+    {"Vivado", vivado, "/opt/Xilinx/Vivado/2017.3/doc/images/vivado_logo.png"},
     { "Firefox", "firefox"}
 }
 skolanProgarm = {
     { "Lyx", "lyx", "/home/r00tr4t/.config/awesome/icons/lyx.ico" },
+    { "Jupyter", "jupyter-notebook" },
     { "Docear", "/usr/bin/docear", "/home/r00tr4t/.config/awesome/icons/www.docear.org.ico" },
     { "Rednotebook", "/home/r00tr4t/bin/start-note.sh" },
     { "CherryTree","cherrytree"},
@@ -285,12 +292,12 @@ globalkeys = awful.util.table.join(
     --Lock streen.
     awful.key({ modkey }, "F12", function () awful.util.spawn("xlock") end),
     --volume
-    awful.key({ }, "#122", function () awful.util.spawn("amixer -c 1 set PCM 10dB-") end),
-    awful.key({ }, "#123", function () awful.util.spawn("amixer -c 1 set PCM 10dB+") end),
+    awful.key({ }, "#122", function () awful.util.spawn("amixer -c 1 set PCM 5dB-") end),
+    awful.key({ }, "#123", function () awful.util.spawn("amixer -c 1 set PCM 5dB+") end),
     awful.key({ }, "#121", function () awful.util.spawn("amixer -c 0 set Master toggle") end),
     --brightness
-    awful.key({ }, "#232", function ()  awful.util.spawn("xbacklight -inc 10") end),
-    awful.key({ }, "#233", function ()  awful.util.spawn("xbacklight -dec 10") end),
+    awful.key({ }, "#232", function ()  awful.util.spawn("xbacklight -inc 5") end),
+    awful.key({ }, "#233", function ()  awful.util.spawn("xbacklight -dec 5") end),
     --awful.key({ modkey, "Shift"   }, "F12",    function() awful.util.spawn("/home/r00tr4t/bin/chxkb.sh")  end),          --- Toggle keymapp A5/Se
     awful.key({ modkey,           }, "Left",   awful.tag.viewprev       ),
     awful.key({ modkey,           }, "Right",  awful.tag.viewnext       ),

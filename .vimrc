@@ -21,8 +21,9 @@ Plugin 'honza/vim-snippets'                                     " Sniplets for u
 Plugin 'lervag/vimtex'
 Plugin 'vim-scripts/taglist.vim'
 "Plugin 'suoto/vim-hdl'
-"Plugin 'tpope/vim-fugitive.git'
-"Plugin 'kien/ctrlp.vim'
+Plugin 'tpope/vim-fugitive.git'
+Plugin 'kien/ctrlp.vim'
+"Plugin 'suoto/vim-hdlPlugin'
 "Plugin Lokaltog/powerline'                                     " linje i botten av vim
 "Plugin 'scrooloose/syntastic'
 "Plugin 'dylanaraps/wal.vim'
@@ -49,7 +50,7 @@ syntax on
 " Put your n-Plugin stuff after this line
 
 " == Custom keybindings ==
-set pastetoggle=<F3>
+set pastetoggle=<F2>
 set clipboard=unnamed
 
 
@@ -71,6 +72,11 @@ let mapleader = ","
 noremap <C-n> <esc>:nohl<CR>
 vnoremap <C-n> <esc>:nohl<CR>
 inoremap <C-n> <esc>:nohl<CR>
+
+" Insert a date in to a document.
+:nnoremap <F3> "=strftime("%Y-%m-%d")<CR>P
+:nnoremap <F4> "=strftime("%H:%M")<CR>P
+
 
 
 " Quicksave command
@@ -134,6 +140,7 @@ set number background=dark
 set t_Co=256
 "" color wombat256mod
 colorscheme molokai
+hi Comment  ctermfg=darkred
 "colorscheme wal
 "colorscheme zellner
 ""hi Visual term=reverse cterm=reverse
@@ -144,11 +151,12 @@ colorscheme molokai
 
 " Showing line numbers and length
 set number  " show line numbers
+set relativenumber  " Sets to defaulty show relative numbers for easy navigation
 set tw=79   " width of document (used by gd)
 set nowrap  " don't automatically wrap on load
 set fo-=t   " don't automatically wrap text when typing
-set colorcolumn=80
-highlight ColorColumn ctermbg=233
+set colorcolumn=120
+"highlight ColorColumn ctermbg=233
 set cursorline
 set diffopt=vertical
 
@@ -223,4 +231,8 @@ set t_Co=256
 "highlight comment    ctermfg=blue
 "highlight identifier ctermfg=99AA00
 
+" Because i use the fish shell I need to set the shell to bash
+set shell=/bin/sh
+" Makes vim transparent.
+hi Normal guibg=NONE ctermbg=NONE
 
