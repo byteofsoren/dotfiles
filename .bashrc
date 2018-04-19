@@ -11,7 +11,24 @@ alias ls='ls --color=auto'
 #export XDG_RUNTIME_DIR=/run/user/`id -u`
 #export LD_LIBRARY_PATH='/usr/lib/python3.6/site-packages/vtK':$LD_LIBRARY_PATH
 
-# batery meter 
+# batery meter
+source ~/.rosrc.sh
+function catshit() {
+   if [ -d ~/catkin_ws ];then
+      OLD=$(pwd)
+      cd ~/catkin_ws
+      catkin_make
+      cd $OLD
+   else
+      echo "run ros-env [distro]"
+   fi
+}
+
+function ll
+{
+   ls -l
+}
+
 
 function powerText
 {
@@ -46,8 +63,10 @@ function powerText
 #█ ▇ ▆ ▅ ▄ ▃ ▂ ▁
 
 # Git function to PS1.
+#export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:/home/r00tr4t/catkin_ws/
+#source /opt/ros/lunar/setup.bash
 
-exec fish
+#exec fish
 # get current branch in git repo
 function parse_git_branch() {
     BRANCH=`git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'`
@@ -120,15 +139,15 @@ WHITE='\033[01;37m'
 HISTCOLLOR='\033[38;5;214m'
 
 #prompt
-#function fansy_ps1_no1
+function fansy_ps1_no1
 {
    export PS1="\[${LGREEN}\]┌─[\u@\h]\[${LBLUE}\] \w\[${LGREEN}\]\n└──> \[${RESTORE}\]"
 }
-#function fansy_ps1_no2
+function fansy_ps1_no2
 {
    export PS1="\[${LGREEN}\]┌─[\[${LCYAN}\]\!\[${LGREEN}\]][\u@\h]\[${LBLUE}\] \w\[${LGREEN}\]\n└──> \[${RESTORE}\]"
 }
-#function fansy_ps1_no3
+function fansy_ps1_no3
 {
    export PS1="\[${LGREEN}\]┌─[\[${HISTCOLLOR}\]\!\[${LGREEN}\]][\u@\h]\[${LBLUE}\] \w \[${HISTCOLLOR}\]\[\`parse_git_branch\`\]\[${LGREEN}\]\n└──> \[${RESTORE}\]"
 }
@@ -145,7 +164,7 @@ function fansy_ps1_no5
 
 
 
-fansy_ps1_no5
+fansy_ps1_no3
 
 # PS1='[\u@\h \W]\$ '
 #export PS1="\[$(tput bold)\e[38;5;113m┌─[\u@\h] \A\e[38;5;75m \w \`parse_git_branch\` \n\e[38;5;113m└──> \[$(tput bold)\]\e[1;037m"
@@ -171,3 +190,5 @@ export TERM=xterm-256color
 
 #Stop ctl - s in gnome terminal 
 stty stop undef
+
+# Start the ros enviorment if needed. =)

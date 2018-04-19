@@ -216,6 +216,10 @@ hi Visual term=reverse cterm=reverse
 " Sets spell language in LaTeX files to en_us.
 autocmd FileType tex setlocal spell spelllang=en_us
 
+" YCM completer setup:
+let g:ycm_python_binary_path = '/usr/bin/python3'
+
+
 
 " make YCM compatible with UltiSnips (using supertab)
 let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
@@ -235,4 +239,4 @@ set t_Co=256
 set shell=/bin/sh
 " Makes vim transparent.
 hi Normal guibg=NONE ctermbg=NONE
-
+hi Comment cterm=italic ctermbg=None ctermfg=Blue
