@@ -47,11 +47,20 @@ Plug 'majutsushi/tagbar'
 Plug 'scrooloose/syntastic'
 Plug 'Yggdroot/indentLine'
 Plug 'avelino/vim-bootstrap-updater'
-Plug 'sheerun/vim-polyglot'
+"Plug 'sheerun/vim-polyglot'
 Plug 'chenzhiwo/ycm-extra-conf-ros'
 " --- LaTeX ---
 Plug 'lervag/vimtex'
+"Plug 'dpelle/vim-LanguageTool'
+"Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
 Plug 'rhysd/vim-grammarous'
+" --- OpenScad ---
+Plug 'sirtaj/vim-openscad'
+" --- Arduino ---
+Plug 'stevearc/vim-arduino'
+Plug 'amal-khailtash/vim-xtcl-syntax', {'for': 'tcl'}
+" --- TypeScript usid in native script ----
+Plug 'leafgarland/typescript-vim'
 
 if isdirectory('/usr/local/opt/fzf')
   Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
@@ -93,22 +102,6 @@ Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
 " ycm keybindings to fix tab completion
 Plug 'ervandew/supertab'
 
-" YCM completer setup:
-let g:ycm_python_binary_path = '/usr/bin/python3'
-
-" make YCM compatible with UltiSnips (using supertab)
-let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-let g:SuperTabDefaultCompletionType = '<C-n>'
-
-" better key bindings for UltiSnipsExpandTrigger
-let g:UltiSnipsExpandTrigger = "<tab>"
-"let g:UltiSnipsExpandTrigger="<cr>"
-let g:UltiSnipsJumpForwardTrigger = "<tab>"
-let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
-"
-" "
-
 " c
 "Plug 'vim-scripts/c.vim', {'for': ['c', 'cpp']}
 "Plug 'ludwig/split-manpage.vim'
@@ -119,7 +112,10 @@ let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 "Plug 'davidhalter/jedi-vim'
 "Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
 
-
+" Arduino cofigurations
+"let g:arduino_cmd =  '/usr/share/arduino/arduino'
+let g:arduino_home_dir = $HOME . ".arduino15"
+"
 "*****************************************************************************
 "*****************************************************************************
 
@@ -215,7 +211,7 @@ else
   let g:indentLine_char = '┆'
   let g:indentLine_faster = 1
 
-  
+
   if $COLORTERM == 'gnome-terminal'
     set term=gnome-256color
   else
@@ -223,7 +219,7 @@ else
       set term=xterm-256color
     endif
   endif
-  
+
 endif
 
 
@@ -351,6 +347,14 @@ augroup END
 
 set autoread
 
+"" Auto remov trailing white space from file when saving.
+autocmd BufWritePre * %s/\s\+$//e
+
+"" PDF with zatura
+autocmd Filetype tex setl updatetime=1
+"let g:livepreview_previewer = 'open -a zathura'
+let g:livepreview_previewer = 'zathura'
+
 "*****************************************************************************
 "" Mappings
 "*****************************************************************************
@@ -412,7 +416,7 @@ nnoremap <silent> <leader>b :Buffers<CR>
 nnoremap <silent> <leader>e :FZF -m<CR>
 
 " snippets
-let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsExpandTrigger="<C-tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<c-b>"
 let g:UltiSnipsEditSplit="vertical"
@@ -485,10 +489,20 @@ nnoremap <Leader>o :.Gbrowse<CR>
 "*****************************************************************************
 "" Custom configs
 "*****************************************************************************
+"
+" tex
+autocmd BufNewFile,BufRead *.tex set filetype=tex
+autocmd BufNewFile,BufRead *.tex set spell
+
 
 " c
 autocmd FileType c setlocal tabstop=4 shiftwidth=4 expandtab
 autocmd FileType cpp setlocal tabstop=4 shiftwidth=4 expandtab
+
+" ctags extra tagfile for Linux kernel
+"":set tags+=~/linux-4.20-rc4/.linux-4.20-rc4
+"":set tags+=tags
+let g:ycm_collect_identifiers_from_tags_files = 1
 
 
 " python
@@ -521,6 +535,14 @@ let g:airline#extensions#virtualenv#enabled = 1
 " Default highlight is better than polyglot
 let g:polyglot_disabled = ['python']
 let python_highlight_all = 1
+
+" Vim sever names set
+"if empty(v:servername) && exists('*remote_startserver')
+"    call remote_startserver('VIM')
+"endif
+
+" Turn of latex calback to avoid error as an alternative to the remote server
+let g:vimtex_compiler_latexmk = {'callback' : 0}
 
 
 "*****************************************************************************
@@ -572,6 +594,29 @@ else
 endif
 
 
+" YCM completer setup:
+let g:ycm_python_binary_path = '/usr/bin/python3'
+
+" make YCM compatible with UltiSnips (using supertab)
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+let g:SuperTabDefaultCompletionType = '<C-n>'
+
+" Remove the unwanted space problem in latex
+let g:syntastic_tex_lacheck_quiet_messages = { 'regex': '\Vpossible unwanted space at' }
+
+" better key bindings for UltiSnipsExpandTrigger
+let g:UltiSnipsExpandTrigger = "<tab>"
+"let g:UltiSnipsExpandTrigger="<cr>"
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+"
+" "
+
 " Makes vim transparent.
 hi Normal guibg=NONE ctermbg=NONE
 hi Comment cterm=italic ctermbg=None ctermfg=Blue
+
+
+

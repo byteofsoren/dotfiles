@@ -6,23 +6,25 @@
 
 #Alias
 alias ls='ls --color=auto'
+alias la='ls -lha'
+alias ll='ls -lh'
+alias ccat='pygmentize -g -O style=colorful,linenos=1'
+export PATH=${PATH}:${HOME}/scripts/
+export OPENSCADPATH=${HOME}/.local/share/OpenSCAD/libraries/
 #alias cdA='cd ~/.config/awesome'
 #export wine32=”WINEPREFIX=' /home/$username/.wine32'”
 #export XDG_RUNTIME_DIR=/run/user/`id -u`
 #export LD_LIBRARY_PATH='/usr/lib/python3.6/site-packages/vtK':$LD_LIBRARY_PATH
 
 # batery meter
-source ~/.rosrc.sh
-function catshit() {
-   if [ -d ~/catkin_ws ];then
-      OLD=$(pwd)
-      cd ~/catkin_ws
-      catkin_make
-      cd $OLD
-   else
-      echo "run ros-env [distro]"
-   fi
-}
+# alias catkin_make="catkin_make -DPYTHON_EXECUTABLE=/usr/bin/python2"
+# source ~/.rosrc.sh
+# source /opt/ros/melodic/setup.bash
+# export ROS_WORKSPACE=~/gpsd_ros/
+
+# Vim keybinding in bash
+set -o vi
+
 
 function ll
 {
@@ -141,7 +143,7 @@ HISTCOLLOR='\033[38;5;214m'
 #prompt
 function fansy_ps1_no1
 {
-   export PS1="\[${LGREEN}\]┌─[\u@\h]\[${LBLUE}\] \w\[${LGREEN}\]\n└──> \[${RESTORE}\]"
+   export PS1="\[${LGREEN}\][\u@\h]\[${LBLUE}\] \w\[${LGREEN}\]\n└──> \[${RESTORE}\]"
 }
 function fansy_ps1_no2
 {
@@ -153,12 +155,12 @@ function fansy_ps1_no3
 }
 function fansy_ps1_no4
 {
-    export PS1="\[${LGREEN}\]┌─[\[${HISTCOLLOR}\]\!\[${LGREEN}\]][\u@\h]\[${LBLUE}\] \w \[${HISTCOLLOR}\]\[\`parse_git_branch\`\] \[\`powerText\`\]\[${LGREEN}\]\n└──> \[${RESTORE}\]"
+    export PS1="\[${LGREEN}\][\[${HISTCOLLOR}\]\!\[${LGREEN}\]][\u@\h]\[${LBLUE}\] \w \[${HISTCOLLOR}\]\[\`parse_git_branch\`\] \[\`powerText\`\]\[${LGREEN}\]\n└──> \[${RESTORE}\]"
 }
 
 function fansy_ps1_no5
 {
-    export PS1="\[${LGREEN}\]┌─[\[${HISTCOLLOR}\]\!\[${LGREEN}\]][\[${HISTCOLLOR}\]\[\`powerText\`\]\[${LGREEN}\]][\u@\h]\[${LBLUE}\] \w \[${HISTCOLLOR}\]\[\`parse_git_branch\`\]\[${LGREEN}\]\n└──> \[${RESTORE}\]"
+    export PS1="\[${LGREEN}\][\[${HISTCOLLOR}\]\!\[${LGREEN}\]][\[${HISTCOLLOR}\]\[\`powerText\`\]\[${LGREEN}\]][\u@\h]\[${LBLUE}\] \w \[${HISTCOLLOR}\]\[\`parse_git_branch\`\]\[${LGREEN}\]\n> \[${RESTORE}\]"
 }
 
 
@@ -179,7 +181,7 @@ fansy_ps1_no3
 #PS1='\[\e[0;32m\]\u\[\e[m\] \[\e[1;34m\]\w\[\e[m\] \[\e[1;32m\]\$\[\e[m\] \[\e[1;37m\]'
 #PS1='\[\e[0;31m\]\u\[\e[m\] \[\e[1;34m\]\w\[\e[m\] \[\e[1;32m\]\$\[\e[m\] \[\e[1;37m\]'
 
-# The ps2 prompt if ever neded 
+# The ps2 prompt if ever neded
 export PS2="\n\e[38;5;214m>\e[1;037m"
 # Edditor
 export EDITOR="vim"
@@ -188,7 +190,7 @@ export EDITOR="vim"
 #256 bit color suport..
 export TERM=xterm-256color
 
-#Stop ctl - s in gnome terminal 
+#Stop ctl - s in gnome terminal
 stty stop undef
 
 # Start the ros enviorment if needed. =)
