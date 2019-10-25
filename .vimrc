@@ -317,6 +317,33 @@ if !exists('*s:setupWrapping')
   endfunction
 endif
 
+" Toggle spell with a language. {{{
+function! ToggleSpell(lang)
+	if !exists("b:old_spelllang")
+		let b:old_spelllang = &spelllang
+		let b:old_spellfile = &spellfile
+		let b:old_dictionary = &dictionary
+	endif
+
+	let l:newMode = ""
+	if !&l:spell || a:lang != &l:spelllang
+		setlocal spell
+		let l:newMode = "spell"
+		execute "setlocal spelllang=" . a:lang
+		execute "setlocal spellfile=" . "~/.vim/spell/" . matchstr(a:lang, "[a-zA-Z][a-zA-Z]") . "." . &encoding . ".add"
+		execute "setlocal dictionary=" . "~/.vim/spell/" . a:lang . "." . &encoding . ".dic"
+		let l:newMode .= ", " . a:lang
+	else
+		setlocal nospell
+		let l:newMode = "nospell"
+		execute "setlocal spelllang=" . b:old_spelllang
+		execute "setlocal spellfile=" . b:old_spellfile
+		execute "setlocal dictionary=" . b:old_dictionary
+	endif
+	return l:newMode
+endfunction
+" }}}
+
 "*****************************************************************************
 "" Autocmd Rules
 "*****************************************************************************
@@ -486,6 +513,11 @@ vnoremap K :m '<-2<CR>gv=gv
 "" Open current line on GitHub
 nnoremap <Leader>o :.Gbrowse<CR>
 
+
+" Spellcheck change language between en_us and sv with F7 and F8
+nmap <silent> <F7> :echo ToggleSpell("en_us")<CR>			" Toggle English spell.
+nmap <silent> <F8> :echo ToggleSpell("sv")<CR>				" Toggle Swedish spell.
+
 "*****************************************************************************
 "" Custom configs
 "*****************************************************************************
@@ -494,6 +526,9 @@ nnoremap <Leader>o :.Gbrowse<CR>
 autocmd BufNewFile,BufRead *.tex set filetype=tex
 autocmd BufNewFile,BufRead *.tex set spell
 
+" groff ms
+autocmd BufNewFile,BufRead *.ms set filetype=groff
+autocmd BufNewFile,BufRead *.ms set spell
 
 " c
 autocmd FileType c setlocal tabstop=4 shiftwidth=4 expandtab

@@ -6,9 +6,10 @@
 
 #Alias
 alias ls='ls --color=auto'
-alias la='ls -lha'
+alias la='ls -lhatr'
 alias ll='ls -lh'
 alias ccat='pygmentize -g -O style=colorful,linenos=1'
+alias open=’xdg-open’
 export PATH=${PATH}:${HOME}/scripts/
 export OPENSCADPATH=${HOME}/.local/share/OpenSCAD/libraries/
 #alias cdA='cd ~/.config/awesome'
