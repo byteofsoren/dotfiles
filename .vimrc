@@ -578,6 +578,7 @@ let python_highlight_all = 1
 
 " Turn of latex calback to avoid error as an alternative to the remote server
 let g:vimtex_compiler_latexmk = {'callback' : 0}
+let g:syntastic_tex_checkers = ['lacheck']
 
 
 "*****************************************************************************
