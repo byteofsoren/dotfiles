@@ -27,14 +27,6 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 #
 # For more information, please refer to <http://unlicense.org/>
-#
-#
-# ==========[OBS]==========
-# OBSERVE that you need to set the $ROS_WS variable
-# copy or symlink the setws.sh to ~/catkin_ws/setws
-# Then sourceit
-#
-# $ source setws
 
 import os
 import ycm_core
@@ -43,7 +35,7 @@ flags = [
         '-Wall',
         '-Wextra',
         '-Werror',
-        # '-Wc++98-compat',
+        '-Wc++98-compat',
         '-Wno-long-long',
         '-Wno-variadic-macros',
         '-fexceptions',
@@ -79,18 +71,14 @@ flags = [
         '-isystem', '/usr/lib/clang/{}/include'.format(''.join(os.listdir('/usr/lib/clang/')[:][0])),
         '-isystem', '/usr/local/include',
         '-isystem', '/usr/include',
-        # '-isystem', '/opt/ros/{}'.format(os.environ['ROS_DISTRO']),
-        '-isystem', '/opt/ros/{}/include'.format(os.environ['ROS_DISTRO']),
-        # '-isystem', '/opt/ros/{}/include/ros'.format(os.environ['ROS_DISTRO']),
-        # '-isystem', '/opt/ros/melodic',
-        # '-isystem', '/opt/ros/melodic/include',
-        '-isystem', '{}/devel/include/'.format(os.environ['ROS_WS']),
-        '-I', '{}/devel/.'.format(os.environ['ROS_WS']),
+        '-isystem', '/opt/ros/kinetic/',
+        '-isystem', '/opt/ros/kinetic/include/',
+        '-isystem', '/home/nvidia/mast/devel/include/',
         # For other target architectures i.e avr and arm
         #'-isystem', '/usr/lib/gcc/avr/{}/'.format(''.join(os.listdir('/usr/lib/gcc/avr/')[:][0])),
         #'-isystem', '/usr/bin/../lib/gcc/arm-linux-gnueabihf/4.9/include',
         #'-isystem', '/usr/include/arm-linux-gnueabihf',
-        '-I', '{}/.'.format(os.environ['ROS_WS']),
+        '-I', '~/mast/.'
         '-I', '.'
 ]
 
@@ -105,9 +93,7 @@ flags = [
 #
 # Most projects will NOT need to set this to anything; you can just change the
 # 'flags' list of compilation flags. Notice that YCM itself uses that approach.
-
 compilation_database_folder = ''
-# compilation_database_folder = str(os.path.dirname(os.path.abspath(__file__))) + "/build/"
 
 if os.path.exists( compilation_database_folder ):
   database = ycm_core.CompilationDatabase( compilation_database_folder )
