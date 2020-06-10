@@ -448,7 +448,15 @@ let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<c-b>"
 let g:UltiSnipsEditSplit="vertical"
 " Temporary fix to make ultisnips load custom files cange username.
-let g:UltiSnipsSnippetDirectories = ['/home/r00tr4t/.vim/ultisnips']
+" let g:UltiSnipsSnippetDirectories = ['/home/r00tr4t/.vim/ultisnips']
+
+" " For ROS map launch,urdf and xacro to xml
+autocmd BufNewFile,BufRead  *.launch set filetype=launch
+autocmd BufNewFile,BufRead  *.launch set syntax=xml
+autocmd BufNewFile,BufRead  *.urdf   set filetype=urdf
+autocmd BufNewFile,BufRead  *.urdf   set filetype=xml
+autocmd BufNewFile,BufRead  *.xacro  set filetype=xacro
+autocmd BufNewFile,BufRead  *.xacro  set filetype=xml
 
 " syntastic
 let g:syntastic_always_populate_loc_list=1
@@ -653,6 +661,5 @@ let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 " Makes vim transparent.
 hi Normal guibg=NONE ctermbg=NONE
 hi Comment cterm=italic ctermbg=None ctermfg=Blue
-
 
 
