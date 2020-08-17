@@ -382,6 +382,9 @@ autocmd Filetype tex setl updatetime=1
 "let g:livepreview_previewer = 'open -a zathura'
 let g:livepreview_previewer = 'zathura'
 
+"" Auto comment for launch files in ROS
+autocmd FileType launch setlocal commentstring=<!--\ %s\ -->
+
 "*****************************************************************************
 "" Mappings
 "*****************************************************************************
