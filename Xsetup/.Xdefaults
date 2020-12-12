@@ -1,0 +1,28 @@
+urxvt*transparent: true
+urxvt*shading: 30
+URxvt*font: xft:Source\ Code\ Pro\ Medium:pixelsize=13:antialias=true:hinting=true,xft:Source\ Code\ Pro\ Medium:pixelsize=13:antialias=true:hinting=true
+! URxvt*font: xft:Droid Sans Mono for Powerline:size=10
+! URxvt*letterSpace: -2
+URxvt.background: rgba:0000/0000/0000/cccc
+URxvt*foreground: #727e78
+URxvt*cursorColor: #FFAF00
+! Use shift+pageup/down to scroll in screen
+URxvt.scrollBar: False
+URxvt.scrollstyle: next
+URxvt.secondaryScroll: True
+! Add simple tab function to urxvt
+URxvt.perl-ext-common: tabbed
+URxvt.tabbed.tabbar-fg: 14
+URxvt.tabbed.tabbar-bg: 0
+URxvt.tabbed.tab-fg: 10
+URxvt.tabbed.tab-bg: 8
+!set the artificial transparency of the v.t.
+URxvt.tansparent: true
+URxvt.depth:32
+! fonts
+! URxvt*font:                 xft:Droid Sans Mono Slashed for Powerline:pixelsize=11:antialias=true:hinting=true:autohint=true
+! URxvt.font: xft:SourceCodePro+Powerline+Awesome Regular:pixelsize=14
+URxvt*boldFont:             xft:Droid Sans Mono Slashed for Powerline:pixelsize=11:antialias=true:hinting=true:autohint=true
+URxvt*italicFont:           xft:Droid Sans Mono Slashed for Powerline:pixelsize=11:antialias=true:autohint=true:hinting=true
+URxvt*bolditalicFont:       xft:Droid Sans Mono slashed for Powerline:pixelsize=11:antialias=true:autohint=true:hinting=true
+

@@ -1,0 +1,141 @@
+! Change font size on the fly with <ctrl> + <upp>/<down>
+Rxvt.iso14755: false
+URxvt.iso14755: false
+!URxvt.iso14755_52: fallse
+!URxvt.font:xft:Monaco:pixelsize=14:normal:antialias=true,xft:SimSun:pixelsize=15:normal:antialias=true
+!URxvt.font:xft:Noto Mono:pixelsize=16:normal:antialias=true,xft:SimSun:pixelsize=15:normal:antialias=true
+!URxvt.font:xft:Monofur:pixelsize=18:normal:antialias=true,xft:SimSun:pixelsize=15:normal:antialias=true
+!URxvt.font:xft:Source Code Pro:pixelsize=16:regular:antialias=true,xft:Wenquanyi Bitmap Song:pixelsize=15:normal:antialias=false
+!URxvt.font:xft:Dejavu Sans Mono:pixelsize=14:normal:antialias=true,xft:Wenquanyi Bitmap Song:pixelsize=15:normal:antialias=false
+!URxvt.font:xft:Dejavu Terminess\ Powerline Sans Mono:pixelsize=14:normal:antialias=true,xft:Wenquanyi Bitmap Song:pixelsize=15:normal:antialias=false
+URxvt*font:            xft:Liberation Mono for Powerline:size=13
+URxvt*boldFont:        xft:Liberation Mono for Powerline:bold:size=13
+URxvt*italicFont:      xft:Liberation Mono for Powerline:italic:autohint=true:size=13
+URxvt*boldItalicFont:  xft:Liberation Mono for Powerline:bold:italic:autohint=true:size=13
+! URxvt*font:  -xos4-terminus-medium-*-*-*-14-*-*-*-*-*-iso8859-15,xft:terminus:pixelsize:10
+! URxvt*boldFont:  -xos4-terminus-bold-*-*-*-14-*-*-*-*-*-iso8859-15,xft:terminus:bold:pixelsize:10
+! URxvt*italicFont:  xft:Bitstream Vera Sans Mono:italic:autohint=true:pixelsize=10
+! URxvt*boldItalicFont:  xft:Bitstream Vera Sans Mono:bold:italic:autohint=true:pixelsize=10
+! Decrease the letter space by one pixel
+URxvt*letterSpace: -1
+
+URxvt.perl-ext-common: default,-selection-popup,fullscreen,font-size,clipboard,keyboard-select
+!URxvt.perl-ext-common: default,tabbedex,-selection-popup,fullscreen,font-size,clipboard,keyboard-select
+! url-select
+!URxvt.tabbed.tab-fg: -1
+!URxvt.tabbed.tab-bg: 15
+!URxvt.tabbed.tabbar-fg: 7
+!URxvt.tabbed.tabbar-bg: -1
+
+!Rxvt.background:#000000
+URxvt.foreground:#FFFFFF
+
+! transparent background
+URxvt.depth: 32
+URxvt.background: [70]#000000
+
+URxvt.multichar_encoding:utf-8
+URxvt.scrollBar_right:true
+URxvt.scrollBar:Fault
+URxvt*termName:xterm
+!URxvt*termName:screen-256color
+
+URxvt*loginShell:  true
+URxvt.preeditType:OverTheSpot
+!URxvt.boldFont:xft:Terminus:bold
+!URxvt.boldItalicFont:xft:Monaco
+!URxvt.italicFont:xft:Monaco
+!URxvt.lineSpace:2pt
+
+!URxvt.colorBD:yellow
+!URxvt.colorUL:Green
+!URxvt.color0:black
+!URxvt.color1:red3
+!URxvt.color2:springgreen
+!URxvt.color3:wheat3
+!!URxvt.color4:navy
+!URxvt.color5:magenta4
+!URxvt.color6:steelblue1
+URxvt.color7:gray85
+URxvt.color8:gray10
+URxvt.color9:SkyBlue3
+URxvt.color10:chartreuse3
+URxvt.color11:lightgoldenrod2
+URxvt.color12:SkyBlue1
+!URxvt.color13:pink1
+!URxvt.color14:lightblue1
+!URxvt.color15:#dbeff9
+!URxvt.color4:SkyBlue1			#重新指定ansi的蓝色和背景冲突了
+!URxvt.color12:#BFE1FF          #重新指定ansi的高亮蓝色
+
+
+! change to black background
+! URxvt.keysym.C-9: command:\033]11;#000000\007\033]10;#d9d9d9\007
+
+! change to light background
+! URxvt.keysym.C-8: command:\033]11;#f2f2f2\007\033]10;#1a1a1a\007
+
+! change to dark gray background
+! URxvt.keysym.C-8: command:\033]11;#777777\007\033]10;#000000\007
+
+! fullscreen switch
+URxvt.keysym.F11:       perl:fullscreen:switch
+
+URxvt.inputMethod: fcitx
+
+! disable iso
+URxvt*iso14755: false
+URxvt*iso14755_52: false
+
+! scrollback position
+! do not scroll with output
+URxvt*scrollTtyOutput: false
+! scroll in relation to buffer (with mouse scroll or Shift+Page Up)
+URxvt*scrollWithBuffer: true
+! scroll back to the bottom on keypress
+URxvt*scrollTtyKeypress: true
+
+! secondaryScreen
+URxvt.secondaryScreen: 1
+URxvt.secondaryScroll: 0
+URxvt.secondaryWheel: 1
+
+! saveLines buffer
+URxvt.saveLines: 4096
+
+! init window size
+URxvt.geometry: 80x24
+
+! font-size-on-fly
+URxvt.keysym.C-0:       perl:font-size:reset
+URxvt.keysym.C-Up:    perl:font-size:increase
+URxvt.keysym.C-Down:   perl:font-size:decrease
+URxvt.keysym.C-Left:   perl:font-size:incglobal
+URxvt.keysym.C-Right:  perl:font-size:decglobal
+URxvt.resize-font.smaller: C-S-Down
+URxvt.resize-font.bigger: C-S-Up
+
+! for tab
+!URxvt.tabbed.autohide: yes
+URxvt.tabbed.title: no
+!URxvt.keysym.M-n: perl:tabbedex:new_tab
+!URxvt.keysym.M-h: perl:tabbedex:prev_tab
+!URxvt.keysym.M-l: perl:tabbedex:next_tab
+
+! for clipboard
+!URxvt.keysym.C-c: perl:clipboard:copy
+URxvt.keysym.C-v: perl:clipboard:paste
+
+! for keyboard-select
+URxvt.keysym.M-Escape: perl:keyboard-select:activate
+
+! for decorations
+!URxvt.borderLess: true
+
+Xcursor.theme: DMZ-White
+URxvt.cursorBlink: true
+URxvt.cursorColor: #657b83
+URxvt.cursorUnderline: true
+! Transparecy settings
+urxvt*transparent: true
+urxvt*shading: 30
