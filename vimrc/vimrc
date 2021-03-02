@@ -45,6 +45,8 @@ Plug 'vim-scripts/CSApprox'
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'Raimondi/delimitMate'
 Plug 'majutsushi/tagbar'
+" --- [vim multi language graphical debugger ] ---
+Plug 'puremourning/vimspector'
 " ----[Sytax checkers]----
 Plug 'scrooloose/syntastic'
 " Plug 'dense-analysis/ale'
@@ -67,6 +69,18 @@ Plug 'amal-khailtash/vim-xtcl-syntax', {'for': 'tcl'}
 Plug 'leafgarland/typescript-vim'
 " Vim signature shows the vim marks grapicaly.
 Plug 'kshenoy/vim-signature'
+" Vim syntax for kivy
+"" Plug 'farfanoide/vim-kivy'
+" suround vim
+" Plug tpope/vim-surround
+
+" PlantUML
+Plug 'weirongxu/plantuml-previewer.vim'
+Plug 'aklt/plantuml-syntax'
+Plug 'tyru/open-browser.vim'
+" let g:netrw_nogx = 1 " disable netrw's gx mapping.
+" nmap gx <Plug>(openbrowser-smart-search)
+" vmap gx <Plug>(openbrowser-smart-search)
 
 if isdirectory('/usr/local/opt/fzf')
   Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
@@ -372,6 +386,20 @@ function! ToggleSpell(lang)
 endfunction
 " }}}
 
+" Toggle transparent mode in vim by :call ToggleTransparent() {{{
+let t:is_transparent = 0
+function! ToggleTransparent()
+  if t:is_transparent == 0
+    hi Normal guibg=#111111 ctermbg=black
+    let t:is_transparent = 1
+  else
+    hi Normal guibg=NONE ctermbg=NONE
+    let t:is_transparent = 0
+  endif
+endfunction
+" }}}
+
+
 "*****************************************************************************
 "" Autocmd Rules
 "*****************************************************************************
@@ -414,9 +442,23 @@ let g:livepreview_previewer = 'zathura'
 autocmd FileType xdefaults setlocal commentstring=!\ %s
 
 
+"" Groff
+autocmd BufNewFile,BufRead *.groff set spell
+au BufNewFile,BufRead *.groff set filetype=groff
+
+"" Spinx documentation
+let g:syntastic_rst_checkers=['sphinx']
+
+
+
 "*****************************************************************************
 "" Mappings
 "*****************************************************************************
+
+"" Inrease a list beggining at 0 with :inc command {{
+xnoremap <silent> <Leader>n :<C-U>let i=1 \| '<,'>g/^/s//\=i.'. '/ \| let i=i+1 \| nohl<CR>
+" xnoremap <silent> <Leader>N
+"" }}
 
 "" Split
 noremap <Leader>- :<C-u>split<CR>
@@ -442,7 +484,7 @@ nnoremap <leader>sc :CloseSession<CR>
 nnoremap <Tab> gt
 nnoremap <S-Tab> gT
 nnoremap <silent> <S-t> :tabnew<CR>
-nnoremap <F9> :Buffers <CR>
+" nnoremap <F9> :Buffers <CR>
 " nnoremap <S-F8> :sbprevious<CR>
 
 "" Set working directory
@@ -474,7 +516,8 @@ endif
 
 cnoremap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
 nnoremap <silent> <leader>b :Buffers<CR>
-nnoremap <silent> <leader>e :FZF -m<CR>
+" nnoremap <silent> <leader>e :FZF -m<CR>
+nnoremap <silent> <leader>e :Files<CR>
 
 " snippets
 let g:UltiSnipsExpandTrigger="<c-tab>"
@@ -536,6 +579,52 @@ noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
 noremap <C-h> <C-w>h
 
+"" Resizing windows
+" noremap <C-S-J> :vertical resize +5<cr>
+" noremap <C-s-L> :vertical resize -5<cr>
+
+"" vimspector multi language graphical debugger keyboard setup
+" let g:vimspector_enable_mappings = 'HUMAN'
+let g:vimspector_install_gadgets = [ 'debugpy', 'vscode-bash-debug', 'CodeLLDB' ]
+fun! GotoWindow(id)
+    call win_gotoid(a:id)
+    MaximizerToggle
+endfun
+
+" Debugger remaps
+nnoremap <leader>m :MaximizerToggle!<CR>
+nnoremap <leader>dd :call vimspector#Launch()<CR>
+nnoremap <leader>dc :call GotoWindow(g:vimspector_session_windows.code)<CR>
+nnoremap <leader>dt :call GotoWindow(g:vimspector_session_windows.tagpage)<CR>
+nnoremap <leader>dv :call GotoWindow(g:vimspector_session_windows.variables)<CR>
+nnoremap <leader>dw :call GotoWindow(g:vimspector_session_windows.watches)<CR>
+nnoremap <leader>ds :call GotoWindow(g:vimspector_session_windows.stack_trace)<CR>
+nnoremap <leader>do :call GotoWindow(g:vimspector_session_windows.output)<CR>
+nnoremap <leader>de :call vimspector#Reset()<CR>
+
+nnoremap <leader>dtcb :call vimspector#CleanLineBreakpoint()<CR>
+
+nmap <leader>dl <Plug>VimspectorStepInto
+nmap <leader>dj <Plug>VimspectorStepOver
+nmap <leader>dk <Plug>VimspectorStepOut
+nmap <leader>d_ <Plug>VimspectorRestart
+nnoremap <leader>d<space> :call vimspector#Continue()<CR>
+
+nmap <leader>drc <Plug>VimspectorRunToCursor
+nmap <leader>dbp <Plug>VimspectorToggleBreakpoint
+nmap <leader>dcbp <Plug>VimspectorToggleConditionalBreakpoint
+
+" <Plug>VimspectorStop
+" <Plug>VimspectorPause
+" <Plug>VimspectorAddFunctionBreakpoint
+
+
+
+"" Alternative mapping for Increasing or decreasing numbers
+nnoremap <A-a> <C-a>
+nnoremap <A-x> <C-x>
+
+
 "" Vmap for maintain Visual Mode after shifting > and <
 vmap < <gv
 vmap > >gv
@@ -572,9 +661,6 @@ nmap <silent> <F8> :echo ToggleSpell("sv")<CR>				" Toggle Swedish spell.
 autocmd BufNewFile,BufRead *.tex set filetype=tex
 autocmd BufNewFile,BufRead *.tex set spell
 
-" groff ms
-autocmd BufNewFile,BufRead *.ms set filetype=groff
-autocmd BufNewFile,BufRead *.ms set spell
 
 " vhdl testbench filetype
 autocmd BufNewFile,BufRead *.vht set filetype=vhdl
@@ -593,6 +679,8 @@ let g:ycm_collect_identifiers_from_tags_files = 1
 " vim-python
 augroup vimrc-python
   autocmd!
+  " autocmd FileType python highlight MyGroup ctermfg=green
+  " autocmd FileType python match MyGroup /breakpoint/
   autocmd FileType python setlocal expandtab shiftwidth=4 tabstop=8 colorcolumn=79
       \ formatoptions+=croq softtabstop=4
       \ cinwords=if,elif,else,for,while,try,except,finally,def,class,with
@@ -631,7 +719,6 @@ let g:syntastic_tex_checkers = ['lacheck']
 
 " Add flavor to vim-tex
 let g:tex_flavor = 'latex'
-
 
 "*****************************************************************************
 "*****************************************************************************
@@ -743,3 +830,5 @@ augroup remember_folds
     autocmd BufWinLeave ?* mkview | filetype detect
     autocmd BufWinEnter ?* silent loadview | filetype detect
 augroup END
+
+
