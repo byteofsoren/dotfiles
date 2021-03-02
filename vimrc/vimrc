@@ -33,54 +33,83 @@ call plug#begin(expand('~/.vim/plugged'))
 "*****************************************************************************
 "" Plug install packages
 "*****************************************************************************
-Plug 'scrooloose/nerdtree'
-Plug 'jistr/vim-nerdtree-tabs'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-gitgutter'
 Plug 'vim-scripts/grep.vim'
 Plug 'vim-scripts/CSApprox'
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'Raimondi/delimitMate'
+
+" --- GUI modifiers ---
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+" --- Vim pane tools ---
+Plug 'scrooloose/nerdtree'
+Plug 'jistr/vim-nerdtree-tabs'
 Plug 'majutsushi/tagbar'
-" --- [vim multi language graphical debugger ] ---
+
+" --- Debugging tools ---
+Plug 'szw/vim-maximizer'
 Plug 'puremourning/vimspector'
-" ----[Sytax checkers]----
+
+" --- Utility tools ---
+Plug 'mbbill/undotree'
+
+" ---- Sytax checkers ----
 Plug 'scrooloose/syntastic'
 " Plug 'dense-analysis/ale'
 " ------------------------
 Plug 'Yggdroot/indentLine'
 Plug 'avelino/vim-bootstrap-updater'
-"Plug 'sheerun/vim-polyglot'
-Plug 'chenzhiwo/ycm-extra-conf-ros'
-" --- LaTeX ---
-Plug 'lervag/vimtex'
-"Plug 'dpelle/vim-LanguageTool'
-"Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
-Plug 'rhysd/vim-grammarous'
-" --- OpenScad ---
-" Plug 'sirtaj/vim-openscad'
-" --- Arduino ---
-Plug 'stevearc/vim-arduino'
-Plug 'amal-khailtash/vim-xtcl-syntax', {'for': 'tcl'}
-" --- TypeScript usid in native script ----
-Plug 'leafgarland/typescript-vim'
-" Vim signature shows the vim marks grapicaly.
+
+
+
+" --- Navigation ---
+"  Vim signature shows the vim marks grapicaly.
 Plug 'kshenoy/vim-signature'
 " Vim syntax for kivy
 "" Plug 'farfanoide/vim-kivy'
 " suround vim
 " Plug tpope/vim-surround
 
+" let g:netrw_nogx = 1 " disable netrw's gx mapping.
+" nmap gx <Plug>(openbrowser-smart-search)
+" vmap gx <Plug>(openbrowser-smart-search)
+"
+
+
+
+
+
+" ---[ Language estensions ]---
 " PlantUML
 Plug 'weirongxu/plantuml-previewer.vim'
 Plug 'aklt/plantuml-syntax'
 Plug 'tyru/open-browser.vim'
-" let g:netrw_nogx = 1 " disable netrw's gx mapping.
-" nmap gx <Plug>(openbrowser-smart-search)
-" vmap gx <Plug>(openbrowser-smart-search)
+
+" --- Arduino ---
+Plug 'stevearc/vim-arduino'
+Plug 'amal-khailtash/vim-xtcl-syntax', {'for': 'tcl'}
+
+" --- TypeScript usid in native script ----
+Plug 'leafgarland/typescript-vim'
+
+" --- OpenScad ---
+" Plug 'sirtaj/vim-openscad'
+
+" --- ROS --
+" Plug 'chenzhiwo/ycm-extra-conf-ros'
+"
+" --- LaTeX ---
+Plug 'lervag/vimtex'
+"Plug 'dpelle/vim-LanguageTool'
+"Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
+Plug 'rhysd/vim-grammarous'
+
+" övrigt
+" Plug 'sheerun/vim-polyglot'
 
 if isdirectory('/usr/local/opt/fzf')
   Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'

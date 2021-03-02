@@ -43,6 +43,11 @@ set iskeyword-=_
 "" Directories for swp files
 set nobackup
 set noswapfile
+" Needed for undotree
+if has("persistent_undo")
+    set undodir=$HOME."/.undodir"
+    set undofile
+endif
 
 set fileformats=unix,dos,mac
 
