@@ -57,10 +57,6 @@ Plug 'puremourning/vimspector'
 " --- Utility tools ---
 Plug 'mbbill/undotree'
 
-" --- VimWiki ---
-Plug 'vimwiki/vimwiki'
-Plug 'tools-life/taskwiki'
-Plug 'plasticboy/vim-markdown'
 
 " ---- Sytax checkers ----
 Plug 'scrooloose/syntastic'
@@ -112,6 +108,13 @@ Plug 'lervag/vimtex'
 "Plug 'dpelle/vim-LanguageTool'
 "Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
 Plug 'rhysd/vim-grammarous'
+
+" --- VimWiki ---
+Plug 'tools-life/taskwiki'
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown'
+Plug 'vimwiki/vimwiki'
+Plug 'farseer90718/vim-taskwarrior'
 
 " övrigt
 " Plug 'sheerun/vim-polyglot'

@@ -4,9 +4,6 @@
 "*****************************************************************************
 
 
-"" VimWiki setup with auto cmd
-" au BufRead,BufNewFile *.md set filetype=vimwiki
-" :autocmd FileType vimwiki map d :VimwikiMakeDiaryNote
 
 
 "" The PC is fast enough, do syntax highlight syncing from start unless 200 lines
@@ -21,11 +18,11 @@ augroup vimrc-remember-cursor-position
   autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 augroup END
 
-"" txt
-augroup vimrc-wrapping
-  autocmd!
-  autocmd BufRead,BufNewFile *.txt call s:setupWrapping()
-augroup END
+" "" txt
+" augroup vimrc-wrapping
+"   autocmd!
+"   autocmd BufRead,BufNewFile *.txt call s:setupWrapping()
+" augroup END
 
 "" make/cmake
 augroup vimrc-make-cmake

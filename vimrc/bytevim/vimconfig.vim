@@ -5,45 +5,6 @@
 " syntastic
 let g:syntastic_python_checkers=['python', 'flake8']
 
-" ------ vimwiki settings ----------
-" Depricated let g:vimwiki_list = [{'path':'~/repos/vimwiki','syntax':'markdown','ext':'.md'}]
-" Run multiple wikis "
-" let g:vimwiki_list = [
-"                         \{'path': '~/repos/vimwiki/personal.md', 'syntax':'markdown','ext':'.md'},
-"                         \{'path': '~/repos/vimwiki/tech.md', 'syntax':'markdown','ext':'.md'}
-"                 \]
-let g:vimwiki_ext2syntax = {'.md':'markdown','.markdown':'markdown', '.mdown':'markdown'}
-" let g:vimwiki_list = [{'path': '~/repos/vimwiki/', 'syntax': 'markdown', 'ext':'.md'}]
-" au FileType vimwiki setlocal shiftwidth=6 tabstop=6 noexpandtab
-
-" Make vimwiki markdown links in the form of
-" "  [text](text.md) instead of [text](text)
-" let g:vimwiki_markdown_link_ext = 1
-
-" " Task warior integartion with VimWiki
-" let g:taskwiki_marup_syntax = 'markdown'
-" let g:markdown_folding = 1
-
-" VimWiki settings
-let g:vimwiki_list = [{
-    \ 'path': '/home/r00tr4t/vimwiki',
-    \ 'path_html': '/home/r00tr4t/vimwiki/html',
-    \ 'syntax': 'markdown',
-    \ 'ext': '.md',
-    \ 'template_path': '/home/r00tr4t/vimwiki/templates',
-    \ 'template_default': 'index',
-    \ 'template_ext': '.html'},
-    \ {
-    \ 'path': '~/personal-wiki/',
-    \ 'path_html': '~/personal-wiki/html/',
-    \ 'syntax': 'markdown',
-    \ 'ext': '.md'}]
-let g:vimwiki_folding='expr'
-let g:vimwiki_use_calendar=0
-let g:vimwiki_html_header_numbering=2
-let g:vimwiki_hl_headers=1
-let g:vimwiki_hl_cb_checked=1
-
 
 " Syntax highlight
 " Default highlight is better than polyglot
