@@ -1,44 +1,68 @@
 #!/bin/bash
 
-target=$HOME/.vim/after/plugin
-# target=$HOME/.vim/myset
 
-function install() {
-	mkdir -p $target
-
-	for f in $(ls bytevim/*.vim) ; do
-		fsource=$(pwd)/$f
-		ftarget=$(echo $target$f | sed 's/bytevim//g')
-		if [[ ! -L $ftarget ]] && [[ ! -e $ftarget ]]; then
-			echo "$fsource"
-			echo "$ftarget"
-			ln -s $fsource $ftarget
+# linkconf creates symlinks in the .vim/after directory.
+# $ linkconf confdir targetdir
+#
+# confdir: 		Is the local diretory in the repo that the symlink is targeting.
+# targetdir: 	Is the directory in .vim/after/target directory
+# 				wher the symlinks are created and later used by vim.
+function linkconf() {
+	confdir=$1
+	targetdir=$2
+	fpafter=$HOME/.vim/after/$targetdir
+	mkdir -p $fpafter
+	echo $fpafter
+	for fp in $(ls $confdir); do
+		fpsource=$(pwd)/$confdir/$fp
+		fptarget=$fpafter/$fp
+		if [[ ! -L $fptarget ]] && [[ ! -e $fptarget ]]; then
+			echo "ln -s $fpsource $fptarget done"
+			ln -s $fpsource $fptarget
 		else
-			echo "$f exists"
+			echo "Skip $fp"
+		fi
+
+
+	done
+
+}
+# cleanconf unlinks the symlinks in the target diretory
+# and if needed removes the directory where it was stored.
+# $ cleanconf ftranget [removedir]
+#
+# target:  		The target diretory in .vim/after/target to unlink targets.
+# removedir: 	if sett to 1 the .vim/after/removedir is also removed.
+function cleanconf() {
+	ftarget=$HOME/.vim/after/$1
+	removedir=$2
+	for fp in $(ls $ftarget); do
+		fptarget=$ftarget/$fp
+		# echo "Cleaning $fptarget"
+		unlink $fptarget
+		if [[ ! -e $fptarget ]]; then
+			echo "Cleaning $fptarget DONE"
+		else
+			echo "Cleaning $fptarget FAIL"
 		fi
 	done
-	if [[ ! -L $HOME/.vimrc ]] && [[ ! -e $HOME/.vimrc ]]; then
-		ln -s vimrc $HOME/.vimrc
-		echo "installing vimrc."
-	else
-		echo "Vimrc OK"
-	fi
-}
-function clean() {
-	if [[ $(ls $target | wc -l ) > 0 ]]; then
-		for f  in $(ls $target); do
-			sh=$target/$f
-			if [[ -L $sh ]]; then
-				echo "unlink $sh"
-				unlink $sh
-			fi
-		done
-	else
-		echo "Nothing to clean"
-	fi
+
 }
 
-__ScriptVersion="1"
+function install() {
+	# linkconf [local source dir] [taregt dir]
+	linkconf ftplugin ftplugin
+	linkconf bytevim  plugin
+
+}
+
+function clean() {
+	# cleanconf [target dir] [delete dir yes=1, no=0]
+	cleanconf ftplugin  0
+	cleanconf plugin 0
+}
+
+__ScriptVersion="1.2"
 
 #===  FUNCTION  ================================================================
 #         NAME:  usage

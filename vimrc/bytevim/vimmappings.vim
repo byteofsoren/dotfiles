@@ -27,6 +27,17 @@ nnoremap <leader>ss :SaveSession<Space>
 nnoremap <leader>sd :DeleteSession<CR>
 nnoremap <leader>sc :CloseSession<CR>
 
+" VimWiki setup
+nmap <Leader>wf <Plug>VimwikiFollowLink
+nmap <Leader>wn <Plug>VimwikiNextLink
+nmap <Leader>wp <Plug>VimwikiPrevLink
+nmap <leader>wc <Plug>VimwikiToggleListItem
+nmap <leader>wd <Plug>VimwikiMakeDiaryNote
+nmap <leader>wg <Plug>VimwikiDiaryGenerateLinks
+nmap <Leader>wD <Plug>VimwikiDeleteLink
+nmap <Leader>ww <Plug>VimwikiIndex
+
+
 "" Tabs
 nnoremap <Tab> gt
 nnoremap <S-Tab> gT
@@ -43,23 +54,6 @@ noremap <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
 "" Opens a tab edit command with the path of the currently edited file filled
 noremap <Leader>te :tabe <C-R>=expand("%:p:h") . "/" <CR>
 
-"" fzf.vim
-set wildmode=list:longest,list:full
-set wildignore+=*.o,*.obj,.git,*.rbc,*.pyc,__pycache__
-let $FZF_DEFAULT_COMMAND =  "find * -path '*/\.*' -prune -o -path 'node_modules/**' -prune -o -path 'target/**' -prune -o -path 'dist/**' -prune -o  -type f -print -o -type l -print 2> /dev/null"
-
-" The Silver Searcher
-if executable('ag')
-  let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git -g ""'
-  set grepprg=ag\ --nogroup\ --nocolor
-endif
-
-" ripgrep
-if executable('rg')
-  let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --follow --glob "!.git/*"'
-  set grepprg=rg\ --vimgrep
-  command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
-endif
 
 cnoremap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
 nnoremap <silent> <leader>b :Buffers<CR>
@@ -67,33 +61,20 @@ nnoremap <silent> <leader>b :Buffers<CR>
 nnoremap <silent> <leader>e :Files<CR>
 
 " jedi-vim
-let g:jedi#popup_on_dot = 0
-let g:jedi#goto_assignments_command = "<leader>g"
-let g:jedi#goto_definitions_command = "<leader>d"
-let g:jedi#documentation_command = "K"
-let g:jedi#usages_command = "<leader>n"
-let g:jedi#rename_command = "<leader>r"
-let g:jedi#show_call_signatures = "0"
-let g:jedi#completions_command = "<C-Space>"
-let g:jedi#smart_auto_mappings = 0
+" let g:jedi#popup_on_dot = 0
+" let g:jedi#goto_assignments_command = "<leader>g"
+" let g:jedi#goto_definitions_command = "<leader>d"
+" let g:jedi#documentation_command = "K"
+" let g:jedi#usages_command = "<leader>n"
+" let g:jedi#rename_command = "<leader>r"
+" let g:jedi#show_call_signatures = "0"
+" let g:jedi#completions_command = "<C-Space>"
+" let g:jedi#smart_auto_mappings = 0
 
-" Ultisnis settings
-let g:UltiSnipsExpandTrigger="<c-tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<c-b>"
-let g:UltiSnipsEditSplit="vertical"
 
 " Temporary fix to make ultisnips load custom files cange username.
 let g:UltiSnipsSnippetDirectories = ['/home/r00tr4t/.vim/ultisnips']
 
-" syntastic
-let g:syntastic_always_populate_loc_list=1
-let g:syntastic_error_symbol='✗'
-let g:syntastic_warning_symbol='⚠'
-let g:syntastic_style_error_symbol = '✗'
-let g:syntastic_style_warning_symbol = '⚠'
-let g:syntastic_auto_loc_list=1
-let g:syntastic_aggregate_errors = 1
 
 " Tagbar
 nmap <silent> <F4> :TagbarToggle<CR>
@@ -124,7 +105,7 @@ endif
 noremap <leader>j :bp<CR>
 noremap <leader>q :bp<CR>
 noremap <leader>k :bn<CR>
-noremap <leader>w :bn<CR>
+" noremap <leader>w :bn<CR> # Can not use <leder> w becaue of vimwiki
 
 "" Close buffer
 noremap <leader>c :bd<CR>
@@ -163,9 +144,13 @@ nnoremap <Leader>o :.Gbrowse<CR>
 " nnoremap <silent> <F2> :NERDTreeFind<CR>
 " nnoremap <silent> <F3> :NERDTreeToggle<CR>
 
+"" Undo tree show
+nnoremap <F5> :UndotreeToggle<CR>                           " Toggle undo pannel
+
 " Spellcheck change language between en_us and sv with F7 and F8
-nmap <silent> <F7> :echo ToggleSpell("en_us")<CR>			" Toggle English spell.
-nmap <silent> <F8> :echo ToggleSpell("sv")<CR>				" Toggle Swedish spell.
+nnoremap <silent> <F7> :echo ToggleSpell("en_us")<CR>			" Toggle English spell.
+nnoremap <silent> <F8> :echo ToggleSpell("sv")<CR>				" Toggle Swedish spell.
+
 
 " terminal emulation open terminal with <space> sh
 if g:vim_bootstrap_editor == 'nvim'
@@ -195,8 +180,12 @@ let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
 let g:SuperTabDefaultCompletionType = '<C-n>'
 
-" Remove the unwanted space problem in latex
-let g:syntastic_tex_lacheck_quiet_messages = { 'regex': '\Vpossible unwanted space at' }
+
+" Ultisnis settings
+" let g:UltiSnipsExpandTrigger="<c-tab>"
+" let g:UltiSnipsJumpForwardTrigger="<tab>"
+" let g:UltiSnipsJumpBackwardTrigger="<c-b>"
+let g:UltiSnipsEditSplit="vertical"
 
 " better key bindings for UltiSnipsExpandTrigger
 let g:UltiSnipsExpandTrigger = "<tab>"
@@ -205,5 +194,4 @@ let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 "
-" "
 

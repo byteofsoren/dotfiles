@@ -5,6 +5,45 @@
 " syntastic
 let g:syntastic_python_checkers=['python', 'flake8']
 
+" ------ vimwiki settings ----------
+" Depricated let g:vimwiki_list = [{'path':'~/repos/vimwiki','syntax':'markdown','ext':'.md'}]
+" Run multiple wikis "
+" let g:vimwiki_list = [
+"                         \{'path': '~/repos/vimwiki/personal.md', 'syntax':'markdown','ext':'.md'},
+"                         \{'path': '~/repos/vimwiki/tech.md', 'syntax':'markdown','ext':'.md'}
+"                 \]
+let g:vimwiki_ext2syntax = {'.md':'markdown','.markdown':'markdown', '.mdown':'markdown'}
+" let g:vimwiki_list = [{'path': '~/repos/vimwiki/', 'syntax': 'markdown', 'ext':'.md'}]
+" au FileType vimwiki setlocal shiftwidth=6 tabstop=6 noexpandtab
+
+" Make vimwiki markdown links in the form of
+" "  [text](text.md) instead of [text](text)
+" let g:vimwiki_markdown_link_ext = 1
+
+" " Task warior integartion with VimWiki
+" let g:taskwiki_marup_syntax = 'markdown'
+" let g:markdown_folding = 1
+
+" VimWiki settings
+let g:vimwiki_list = [{
+    \ 'path': '/home/r00tr4t/vimwiki',
+    \ 'path_html': '/home/r00tr4t/vimwiki/html',
+    \ 'syntax': 'markdown',
+    \ 'ext': '.md',
+    \ 'template_path': '/home/r00tr4t/vimwiki/templates',
+    \ 'template_default': 'index',
+    \ 'template_ext': '.html'},
+    \ {
+    \ 'path': '~/personal-wiki/',
+    \ 'path_html': '~/personal-wiki/html/',
+    \ 'syntax': 'markdown',
+    \ 'ext': '.md'}]
+let g:vimwiki_folding='expr'
+let g:vimwiki_use_calendar=0
+let g:vimwiki_html_header_numbering=2
+let g:vimwiki_hl_headers=1
+let g:vimwiki_hl_cb_checked=1
+
 
 " Syntax highlight
 " Default highlight is better than polyglot
@@ -57,10 +96,39 @@ let g:NERDTreeWinSize = 50
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
 
 
+" syntastic
+let g:syntastic_always_populate_loc_list=1
+let g:syntastic_error_symbol='✗'
+let g:syntastic_warning_symbol='⚠'
+let g:syntastic_style_error_symbol = '✗'
+let g:syntastic_style_warning_symbol = '⚠'
+let g:syntastic_auto_loc_list=1
+let g:syntastic_aggregate_errors = 1
+
+" Remove the unwanted space problem in latex
+let g:syntastic_tex_lacheck_quiet_messages = { 'regex': '\Vpossible unwanted space at' }
 
 " -----------------------------------------------------------
-" ctags extra tagfile for Linux kernel
+" == ctags extra tagfile for Linux kernel ===
 "":set tags+=~/linux-4.20-rc4/.linux-4.20-rc4
 "":set tags+=tags
 let g:ycm_collect_identifiers_from_tags_files = 1
 " -----------------------------------------------------------
+
+"" fzf.vim
+set wildmode=list:longest,list:full
+set wildignore+=*.o,*.obj,.git,*.rbc,*.pyc,__pycache__
+let $FZF_DEFAULT_COMMAND =  "find * -path '*/\.*' -prune -o -path 'node_modules/**' -prune -o -path 'target/**' -prune -o -path 'dist/**' -prune -o  -type f -print -o -type l -print 2> /dev/null"
+
+" The Silver Searcher
+if executable('ag')
+  let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git -g ""'
+  set grepprg=ag\ --nogroup\ --nocolor
+endif
+
+" ripgrep
+if executable('rg')
+  let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --follow --glob "!.git/*"'
+  set grepprg=rg\ --vimgrep
+  command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
+endif

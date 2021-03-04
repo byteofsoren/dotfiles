@@ -2,6 +2,13 @@
 "*****************************************************************************
 "" Autocmd Rules
 "*****************************************************************************
+
+
+"" VimWiki setup with auto cmd
+" au BufRead,BufNewFile *.md set filetype=vimwiki
+" :autocmd FileType vimwiki map d :VimwikiMakeDiaryNote
+
+
 "" The PC is fast enough, do syntax highlight syncing from start unless 200 lines
 augroup vimrc-sync-fromstart
   autocmd!

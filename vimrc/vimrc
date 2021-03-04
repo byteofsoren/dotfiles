@@ -57,6 +57,11 @@ Plug 'puremourning/vimspector'
 " --- Utility tools ---
 Plug 'mbbill/undotree'
 
+" --- VimWiki ---
+Plug 'vimwiki/vimwiki'
+Plug 'tools-life/taskwiki'
+Plug 'plasticboy/vim-markdown'
+
 " ---- Sytax checkers ----
 Plug 'scrooloose/syntastic'
 " Plug 'dense-analysis/ale'
