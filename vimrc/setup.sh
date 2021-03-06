@@ -53,6 +53,14 @@ function install() {
 	# linkconf [local source dir] [taregt dir]
 	linkconf ftplugin ftplugin
 	linkconf bytevim  plugin
+	if [[ ! -L "$HOME/.vimrc" ]] && [[ ! -e "$HOME/.vimrc" ]]; then
+		# ln -s ~/.vimrc $(pwd)/vimrc
+		echo "pass"
+	fi
+	if [[ ! -L "~/.vim/plugin/vimwiki_settings/vimwikiconf.vim" ]] && [[ ! -e "~/.vim/plugin/vimwiki_settings/vimwikiconf.vim" ]]; then
+		mkdir -p ~/.vim/plugin/vimwiki_settings
+		ln -s $(pwd)/vimwikiconf.vim ~/.vim/plugin/vimwiki_settings/vimwikiconf.vim
+	fi
 
 }
 

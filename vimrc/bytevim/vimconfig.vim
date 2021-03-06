@@ -93,3 +93,13 @@ if executable('rg')
   set grepprg=rg\ --vimgrep
   command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
 endif
+
+
+
+" VimWiki fix.
+" au FileType vimwiki setlocal syntax=markdown
+" " let g:vimwiki_ext2syntax = {'.wiki': 'markdown', '.md':'markdown'}
+" let g:vim_markdown_folding_disabled = 1
+let g:vimwiki_ext2syntax = {}
+let g:vimwiki_global_ext = 0
+

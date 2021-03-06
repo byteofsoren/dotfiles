@@ -64,6 +64,8 @@ autocmd BufNewFile,BufRead *.tex set spell
 " vhdl testbench filetype
 autocmd BufNewFile,BufRead *.vht set filetype=vhdl
 
+
+
 " c
 autocmd FileType c setlocal tabstop=4 shiftwidth=4 expandtab
 autocmd FileType cpp setlocal tabstop=4 shiftwidth=4 expandtab
