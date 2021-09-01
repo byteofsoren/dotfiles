@@ -2,11 +2,17 @@
 autocmd BufEnter *.md setlocal syntax=markdown
 au FileType vimwiki setlocal syntax=markdown
 setlocal syntax=markdown
+set nofoldenable
 
 " Debug options
-verb set syntax?
-echom "after script executed"
+" verb set syntax?
+" echom "after script executed"
 " Debug options
+"
+" Ultisnip
+if exists('did_plugin_ultisnips')
+  UltiSnipsAddFiletypes markdown
+endif
 
 " let g:vimwiki_ext2syntax = {}
 " let g:vimwiki_ext2syntax = {'.wiki': 'markdown', '.md':'markdown'}

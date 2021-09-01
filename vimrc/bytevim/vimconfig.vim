@@ -22,6 +22,13 @@ let g:syntastic_tex_checkers = ['lacheck']
 
 " Add flavor to vim-tex
 let g:tex_flavor = 'latex'
+" Disable custom warnings based on regexp
+let g:qf_auto_open_quickfix = 0
+let g:vimtex_quickfix_ignore_filters = [
+      \ 'Marginpar on page',
+      \ 'unmatched',
+      \ 'unmatched "beginning',
+      \]
 
 " Color setups
 " hi Conceal guibg=Blue guifg=White
@@ -72,9 +79,20 @@ let g:syntastic_tex_lacheck_quiet_messages = { 'regex': '\Vpossible unwanted spa
 " -----------------------------------------------------------
 " == ctags extra tagfile for Linux kernel ===
 "":set tags+=~/linux-4.20-rc4/.linux-4.20-rc4
-"":set tags+=tags
+set tags+=tags
 let g:ycm_collect_identifiers_from_tags_files = 1
 " -----------------------------------------------------------
+
+" --- ycm configurations for cland if needed: ------
+" Let clangd fully control code completion
+let g:ycm_clangd_uses_ycmd_caching = 0  " <<< Inpacts preformence on vim
+" Use installed clangd, not YCM-bundled clangd which doesn't get updates.
+let g:ycm_clangd_binary_path = exepath("clangd")
+" let g:ycm_clangd_args = ['-log=verbose', '-pretty', '-query-driver=/usr/bin/west']
+" let g:ycm_clangd_args = ['-log=verbose', '-pretty', '-query-driver=/usr/bin/clang++']
+let g:ycm_clangd_args = ['-log=verbose', '-pretty']
+
+
 
 "" fzf.vim
 set wildmode=list:longest,list:full
@@ -97,7 +115,7 @@ endif
 
 
 " VimWiki fix.
-" au FileType vimwiki setlocal syntax=markdown
+au FileType vimwiki setlocal syntax=markdown
 " " let g:vimwiki_ext2syntax = {'.wiki': 'markdown', '.md':'markdown'}
 " let g:vim_markdown_folding_disabled = 1
 let g:vimwiki_ext2syntax = {}

@@ -105,6 +105,9 @@ endif
 noremap <leader>j :bp<CR>
 noremap <leader>q :bp<CR>
 noremap <leader>k :bn<CR>
+
+"" Marker list
+nnoremap <leader>' :Marks<CR>
 " noremap <leader>w :bn<CR> # Can not use <leder> w becaue of vimwiki
 
 "" Close buffer
@@ -158,6 +161,15 @@ if g:vim_bootstrap_editor == 'nvim'
 else
   nnoremap <silent> <leader>sh :VimShellCreate<CR>
 endif
+
+" For macroing the moonlander kb : do not work, thus mapping ; to :
+nnoremap ; :
+" nnoremap : ; " swap : -> ;        Not needed
+" vnoremap ; : " Visual mode ; -> : Not needed
+" vnoremap : ; " Visual swap : -> ; Not needed
+
+" Duble hitt ; to get regular ;
+noremap ;; ;
 
 
 " Gramarous bindings:
