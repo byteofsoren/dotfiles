@@ -74,10 +74,15 @@ Plug 'avelino/vim-bootstrap-updater'
 " --- Navigation ---
 "  Vim signature shows the vim marks grapicaly.
 Plug 'kshenoy/vim-signature'
-" Vim syntax for kivy
+
+" pekaboo shos the registers before yank/pase from regestry when pressing " or @
+Plug 'junegunn/vim-peekaboo'
+
+
+" Vim syntax for kiv
 "" Plug 'farfanoide/vim-kivy'
 " suround vim
-" Plug tpope/vim-surround
+" Plug tpope/vim-suound
 
 " let g:netrw_nogx = 1 " disable netrw's gx mapping.
 " nmap gx <Plug>(openbrowser-smart-search)
@@ -185,7 +190,7 @@ let g:arduino_home_dir = $HOME . ".arduino15"
 
 "Tex conseal turn off because its anoiying
 " let g:tex_conceal = ''
-let g:vimtex_syntax_conceal_default = 0
+" let g:vimtex_syntax_conceal_default = 0
 " let g:vimtex_syntax_conceal = { 'accents' : 1 }
 " let g:vimtex_syntax_conceal = []
 

@@ -124,7 +124,7 @@ URxvt.tabbed.title: no
 
 ! for clipboard
 !URxvt.keysym.C-c: perl:clipboard:copy
-URxvt.keysym.C-v: perl:clipboard:paste
+!URxvt.keysym.C-v: perl:clipboard:paste
 
 ! for keyboard-select
 URxvt.keysym.M-Escape: perl:keyboard-select:activate

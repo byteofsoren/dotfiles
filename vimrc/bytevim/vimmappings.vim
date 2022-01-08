@@ -149,6 +149,7 @@ nnoremap <Leader>o :.Gbrowse<CR>
 
 "" Undo tree show
 nnoremap <F5> :UndotreeToggle<CR>                           " Toggle undo pannel
+:inoremap <F5> <C-R>=strftime("diary/%Y-%m-%d-%a")<CR>
 
 " Spellcheck change language between en_us and sv with F7 and F8
 nnoremap <silent> <F7> :echo ToggleSpell("en_us")<CR>			" Toggle English spell.
@@ -156,11 +157,11 @@ nnoremap <silent> <F8> :echo ToggleSpell("sv")<CR>				" Toggle Swedish spell.
 
 
 " terminal emulation open terminal with <space> sh
-if g:vim_bootstrap_editor == 'nvim'
-  nnoremap <silent> <leader>sh :terminal<CR>
-else
-  nnoremap <silent> <leader>sh :VimShellCreate<CR>
-endif
+" if g:vim_bootstrap_editor == 'nvim'
+"   nnoremap <silent> <leader>sh :terminal<CR>
+" else
+"   nnoremap <silent> <leader>sh :VimShellCreate<CR>
+" endif
 
 " For macroing the moonlander kb : do not work, thus mapping ; to :
 nnoremap ; :
@@ -170,6 +171,17 @@ nnoremap ; :
 
 " Duble hitt ; to get regular ;
 noremap ;; ;
+
+" Macro for spellchecking the last missspelled word
+" press ctrl+v l in insert mode to correct the last wrongly typed word.
+imap <F12> <Esc>[s1z=`]a
+" Spell cheking macro binding to mappp numpad to the ctrl+k4 spell
+" sugioestions.
+nnoremap <Leader><F8> [s
+nnoremap <Leader><F9> ]s
+nnoremap <Leader><F10> z=
+" nnoremap <Leader> <F7> zg
+" nnoremap <Leader> <F8> zug
 
 
 " Gramarous bindings:

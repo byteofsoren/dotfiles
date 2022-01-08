@@ -16,6 +16,7 @@ let g:vimwiki_list = [{
     \ 'path_html': '/home/r00tr4t/repos/vimwiki/html',
     \ 'syntax': 'markdown',
     \ 'ext': '.md',
+    \ 'list_margin': 0,
     \  'index':				'README',
     \ 'custom_wiki2html': '/home/r00tr4t/repos/vimwiki/md2html.sh',
     \ 'css_file': '/home/r00tr4t/repos/vimwiki/templates/assets/css',
