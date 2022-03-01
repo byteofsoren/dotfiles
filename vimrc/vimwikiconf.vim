@@ -12,15 +12,15 @@ autocmd FileType vimwiki  setlocal syntax=markdown
 " --- stup 1----
 "
 let g:vimwiki_list = [{
-    \ 'path': '/home/r00tr4t/repos/vimwiki',
-    \ 'path_html': '/home/r00tr4t/repos/vimwiki/html',
+    \ 'path': '/home/soren/repos/vimwiki',
+    \ 'path_html': '/home/soren/repos/vimwiki/html',
     \ 'syntax': 'markdown',
     \ 'ext': '.md',
     \ 'list_margin': 0,
     \  'index':				'README',
-    \ 'custom_wiki2html': '/home/r00tr4t/repos/vimwiki/md2html.sh',
-    \ 'css_file': '/home/r00tr4t/repos/vimwiki/templates/assets/css',
-    \ 'template_path': '/home/r00tr4t/repos/vimwiki/templates',
+    \ 'custom_wiki2html': '/home/soren/repos/vimwiki/md2html.sh',
+    \ 'css_file': '/home/soren/repos/vimwiki/templates/assets/css',
+    \ 'template_path': '/home/soren/repos/vimwiki/templates',
     \ 'nested_syntaxes':{'python': 'python', 'sh': 'sh', 'c':   'c', 'c++': 'cpp'},
     \ 'template_default': 'index',
     \ 'template_ext': '.html'},

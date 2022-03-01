@@ -73,7 +73,7 @@ nnoremap <silent> <leader>e :Files<CR>
 
 
 " Temporary fix to make ultisnips load custom files cange username.
-let g:UltiSnipsSnippetDirectories = ['/home/r00tr4t/.vim/ultisnips']
+let g:UltiSnipsSnippetDirectories = ['/home/soren/.vim/ultisnips']
 
 
 " Tagbar

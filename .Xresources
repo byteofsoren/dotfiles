@@ -1,134 +1,102 @@
-! Change font size on the fly with <ctrl> + <upp>/<down>
-Rxvt.iso14755: false
-!URxvt.iso14755_52: fallse
-!URxvt.font:xft:Monaco:pixelsize=14:normal:antialias=true,xft:SimSun:pixelsize=15:normal:antialias=true
-!URxvt.font:xft:Noto Mono:pixelsize=16:normal:antialias=true,xft:SimSun:pixelsize=15:normal:antialias=true
-!URxvt.font:xft:Monofur:pixelsize=18:normal:antialias=true,xft:SimSun:pixelsize=15:normal:antialias=true
-!URxvt.font:xft:Source Code Pro:pixelsize=16:regular:antialias=true,xft:Wenquanyi Bitmap Song:pixelsize=15:normal:antialias=false
-!URxvt.font:xft:Dejavu Sans Mono:pixelsize=14:normal:antialias=true,xft:Wenquanyi Bitmap Song:pixelsize=15:normal:antialias=false
-!URxvt.font:xft:Dejavu Terminess\ Powerline Sans Mono:pixelsize=14:normal:antialias=true,xft:Wenquanyi Bitmap Song:pixelsize=15:normal:antialias=false
-URxvt*font:            xft:Liberation Mono for Powerline:size=13
-URxvt*boldFont:        xft:Liberation Mono for Powerline:bold:size=13
-URxvt*italicFont:      xft:Liberation Mono for Powerline:italic:autohint=true:size=13
-URxvt*boldItalicFont:  xft:Liberation Mono for Powerline:bold:italic:autohint=true:size=13
-! Decrease the letter space by one pixel
-URxvt*letterSpace: -1
+!! Colorscheme
 
-URxvt.perl-ext-common: default,-selection-popup,fullscreen,font-size,clipboard,keyboard-select
-!URxvt.perl-ext-common: default,tabbedex,-selection-popup,fullscreen,font-size,clipboard,keyboard-select
-! url-select
-!URxvt.tabbed.tab-fg: -1
-!URxvt.tabbed.tab-bg: 15
-!URxvt.tabbed.tabbar-fg: 7
-!URxvt.tabbed.tabbar-bg: -1
+! special
+*.foreground: #93a1a1
+*.background: #141c21
+*.cursorColor: #afbfbf
 
-!Rxvt.background:#000000
-Rxvt.foreground:#FFFFFF
+! black
+*.color0: #263640
+*.color8: #4a697d
 
-! transparent background
+! red
+*.color1: #d12f2c
+*.color9: #fa3935
+
+! green
+*.color2: #819400
+*.color10: #a4bd00
+
+! yellow
+*.color3: #b08500
+*.color11: #d9a400
+
+! blue
+*.color4: #2587cc
+*.color12: #2ca2f5
+
+! magenta
+*.color5: #696ebf
+*.color13: #8086e8
+
+! cyan
+*.color6: #289c93
+*.color14: #33c5ba
+
+! white
+*.color7: #bfbaac
+*.color15: #fdf6e3
+
+!! URxvt Appearance
+!!urxvt.font: xft:terminus:antialias=true:pixelsize=12
+URxvt*font:     xft:SourceCodePro:size=12,xft:SourceCodePro+Powerline+Awesome Regular:size=10
+! URxvt*font:     xft:bitstream vera sans mono:size=8:antialias=true
+URxvt*boldFont: xft:bitstream vera sans mono:bold:size=8:antialias=true
+! URxvt.font:            xft:Liberation Mono for Powerline:size=8
+! URxvt.boldFont:        xft:Liberation Mono for Powerline:bold:size=8
+! URxvt.italicFont:      xft:Liberation Mono for Powerline:italic:autohint=true:size=8
+! With librefont mono you need to decrease the letter space by one pixel
+URxvt*letterSpace: -2
+! URxvt.font: -*-rissole-*
+!URxvt.boldFont: -*-rissole-*
+!URxvt.italicFont: -*-rissole-*
+!URxvt.boldItalicfont: -*-rissole-*
+URxvt.letterSpace: 0
+URxvt.lineSpace: 0
+URxvt.geometry: 92x24
+URxvt.internalBorder: 24
+URxvt.cursorBlink: true
+URxvt.cursorUnderline: false
+URxvt.saveline: 2048
+URxvt.scrollBar: false
+URxvt.scrollBar_right: false
+URxvt.urgentOnBell: true
+!!URxvt.depth: 24
+URxvt.iso14755: false
+
+
+!! Common Keybinds for Navigations
+! URxvt.keysym.Shift-Up: command:\033]720;1\007
+! URxvt.keysym.Shift-Down: command:\033]721;1\007
+! URxvt.keysym.Control-Up: \033[1;5A
+! URxvt.keysym.Control-Down: \033[1;5B
+! URxvt.keysym.Control-Right: \033[1;5C
+! URxvt.keysym.Control-Left: \033[1;5D
+
+! For newer versions of urxvt
+URxvt.keysym.C-Up:     font-size:increase
+URxvt.keysym.C-Down:   font-size:decrease
+URxvt.keysym.C-S-Up:   font-size:incglobal
+URxvt.keysym.C-S-Down: font-size:decglobal
+URxvt.keysym.C-equal:  font-size:reset
+URxvt.keysym.C-slash:  font-size:show
+
+!! Copy Paste & Other Extensions
+URxvt.perl-ext-common: default,clipboard,url-select,keyboard-select
+URxvt.copyCommand: xclip -i -selection clipboard
+URxvt.pasteCommand: xclip -o -selection clipboard
+URxvt.keysym.M-c: perl:clipboard:copy
+URxvt.keysym.M-v: perl:clipboard:paste
+URxvt.keysym.M-C-v: perl:clipboard:paste_escaped
+URxvt.keysym.M-Escape: perl:keyboard-select:activate
+URxvt.keysym.M-s: perl:keyboard-select:search
+URxvt.keysym.M-u: perl:url-select:select_next
+URxvt.urlLauncher: firefox
+URxvt.underlineURLs: true
+URxvt.urlButton: 1
+
+!! Transparrent bacground
 URxvt.depth: 32
 URxvt.background: [70]#000000
 
-URxvt.multichar_encoding:utf-8
-URxvt.scrollBar_right:true
-Rxvt.scrollBar:Fault
-URxvt*termName:xterm
-
-URxvt.preeditType:OverTheSpot
-!URxvt.boldFont:xft:Terminus:bold
-!URxvt.boldItalicFont:xft:Monaco
-!URxvt.italicFont:xft:Monaco
-!URxvt.lineSpace:2pt
-
-!URxvt.colorBD:yellow
-!URxvt.colorUL:Green
-!URxvt.color0:black
-!URxvt.color1:red3
-!URxvt.color2:springgreen
-!URxvt.color3:wheat3
-!!URxvt.color4:navy
-!URxvt.color5:magenta4
-!URxvt.color6:steelblue1
-URxvt.color7:gray85
-URxvt.color8:gray10
-URxvt.color9:SkyBlue3
-URxvt.color10:chartreuse3
-URxvt.color11:lightgoldenrod2
-URxvt.color12:SkyBlue1
-!URxvt.color13:pink1
-!URxvt.color14:lightblue1
-!URxvt.color15:#dbeff9
-!URxvt.color4:SkyBlue1			#重新指定ansi的蓝色和背景冲突了
-!URxvt.color12:#BFE1FF          #重新指定ansi的高亮蓝色
-
-
-! change to black background
-URxvt.keysym.C-9: command:\033]11;#000000\007\033]10;#d9d9d9\007
-
-! change to light background
-! URxvt.keysym.C-7: command:\033]11;#f2f2f2\007\033]10;#1a1a1a\007
-
-! change to dark gray background
-! URxvt.keysym.C-8: command:\033]11;#777777\007\033]10;#000000\007
-
-! fullscreen switch
-URxvt.keysym.F11:       perl:fullscreen:switch
-
-URxvt.inputMethod: fcitx
-
-! disable iso
-URxvt*iso14755: false
-URxvt*iso14755_52: false
-
-! scrollback position
-! do not scroll with output
-URxvt*scrollTtyOutput: false
-! scroll in relation to buffer (with mouse scroll or Shift+Page Up)
-URxvt*scrollWithBuffer: true
-! scroll back to the bottom on keypress
-URxvt*scrollTtyKeypress: true
-
-! secondaryScreen
-URxvt.secondaryScreen: 1
-URxvt.secondaryScroll: 0
-URxvt.secondaryWheel: 1
-
-! saveLines buffer
-URxvt.saveLines: 4096
-
-! init window size
-URxvt.geometry: 80x24
-
-! font-size-on-fly
-URxvt.keysym.C-0:       perl:font-size:reset
-URxvt.keysym.C-Up:    perl:font-size:increase
-URxvt.keysym.C-Down:   perl:font-size:decrease
-URxvt.keysym.C-Left:   perl:font-size:incglobal
-URxvt.keysym.C-Right:  perl:font-size:decglobal
-URxvt.resize-font.smaller: C-S-Down
-URxvt.resize-font.bigger: C-S-Up
-
-! for tab
-!URxvt.tabbed.autohide: yes
-URxvt.tabbed.title: no
-!URxvt.keysym.M-n: perl:tabbedex:new_tab
-!URxvt.keysym.M-h: perl:tabbedex:prev_tab
-!URxvt.keysym.M-l: perl:tabbedex:next_tab
-
-! for clipboard
-!URxvt.keysym.C-c: perl:clipboard:copy
-URxvt.keysym.C-v: perl:clipboard:paste
-
-! for keyboard-select
-URxvt.keysym.M-Escape: perl:keyboard-select:activate
-
-! for decorations
-!URxvt.borderLess: true
-
-Xcursor.theme: DMZ-White
-URxvt.cursorBlink: true
-URxvt.cursorColor: #657b83
-URxvt.cursorUnderline: true
-! Transparecy settings
-urxvt*transparent: true
-urxvt*shading: 30
+!! Fixing powerline
