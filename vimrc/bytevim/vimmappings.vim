@@ -73,7 +73,9 @@ nnoremap <silent> <leader>e :Files<CR>
 
 
 " Temporary fix to make ultisnips load custom files cange username.
-let g:UltiSnipsSnippetDirectories = ['/home/soren/.vim/ultisnips']
+let g:UltiSnipsSnippetsDir = "~/.vim/UltiSnips"
+" let g:UltiSnipsSnippetDirectories = ['/home/soren/repos/ultisnips','/home/soren/.vim/UltiSnips','/home/soren/.vim/ultisnips','/home/soren/.vim/plugged/vim-snippets/UltiSnips',]
+let g:UltiSnipsSnippetDirectories = ['~/.vim/UltiSnips', 'UltiSnips']
 
 
 " Tagbar
@@ -200,9 +202,20 @@ nnoremap <Leader><F10> z=
 let g:ycm_python_binary_path = '/usr/bin/python3'
 
 " make YCM compatible with UltiSnips (using supertab)
-let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-let g:SuperTabDefaultCompletionType = '<C-n>'
+" let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_select_completion = ['<C-k>', '<Down>']
+" let g:ycm_key_list_previous_completion = ['<C-k>', '<Up>']
+" let g:ycm_key_list_previous_completion = ['<Up>']
+" let g:SuperTabDefaultCompletionType = '<C-n>'
+" let g:SuperTabDefaultCompletionType = "<c-x><c-u>"
+" let g:SuperTabDefaultCompletionType = "<c-tab>"
+"
+" auto close the completion window
+let g:ycm_autoclose_preview_window_after_completion = 1
+" only use the `Down` key to select the first item
+" let g:ycm_key_list_select_completion = ['<Down>']
+
+
 
 
 " Ultisnis settings
@@ -212,10 +225,10 @@ let g:SuperTabDefaultCompletionType = '<C-n>'
 let g:UltiSnipsEditSplit="vertical"
 
 " better key bindings for UltiSnipsExpandTrigger
-let g:UltiSnipsExpandTrigger = "<tab>"
+" let g:UltiSnipsExpandTrigger = "<tab>"
 "let g:UltiSnipsExpandTrigger="<cr>"
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger = "<tab>"
-let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+" let g:UltiSnipsExpandTrigger="<tab>"
+" let g:UltiSnipsJumpForwardTrigger = "<tab>"
+" let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 "
 

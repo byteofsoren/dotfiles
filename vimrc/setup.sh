@@ -11,14 +11,14 @@ function linkconf() {
 	confdir=$1
 	targetdir=$2
 	fpafter=$HOME/.vim/after/$targetdir
-	mkdir -p $fpafter
-	echo $fpafter
+	mkdir -p "$fpafter"
+	echo "$fpafter"
 	for fp in $(ls $confdir); do
 		fpsource=$(pwd)/$confdir/$fp
 		fptarget=$fpafter/$fp
 		if [[ ! -L $fptarget ]] && [[ ! -e $fptarget ]]; then
 			echo "ln -s $fpsource $fptarget done"
-			ln -s $fpsource $fptarget
+			ln -s "$fpsource" "$fptarget"
 		else
 			echo "Skip $fp"
 		fi
@@ -34,12 +34,12 @@ function linkconf() {
 # target:  		The target diretory in .vim/after/target to unlink targets.
 # removedir: 	if sett to 1 the .vim/after/removedir is also removed.
 function cleanconf() {
-	ftarget=$HOME/.vim/after/$1
-	removedir=$2
+	ftarget="$HOME/.vim/after/$1"
+	# removedir="$2"
 	for fp in $(ls $ftarget); do
 		fptarget=$ftarget/$fp
 		# echo "Cleaning $fptarget"
-		unlink $fptarget
+		unlink "$fptarget"
 		if [[ ! -e $fptarget ]]; then
 			echo "Cleaning $fptarget DONE"
 		else
@@ -54,12 +54,12 @@ function install() {
 	linkconf ftplugin ftplugin
 	linkconf bytevim  plugin
 	if [[ ! -L "$HOME/.vimrc" ]] && [[ ! -e "$HOME/.vimrc" ]]; then
-		ln -s ~/.vimrc $(pwd)/vimrc
+		ln -s "$HOME/.vimrc" "$(pwd)/vimrc"
 		echo "pass"
 	fi
-	if [[ ! -L "~/.vim/plugin/vimwiki_settings/vimwikiconf.vim" ]] && [[ ! -e "~/.vim/plugin/vimwiki_settings/vimwikiconf.vim" ]]; then
-		mkdir -p ~/.vim/plugin/vimwiki_settings
-		ln -s $(pwd)/vimwikiconf.vim ~/.vim/plugin/vimwiki_settings/vimwikiconf.vim
+	if [[ ! -L "$HOME/.vim/plugin/vimwiki_settings/vimwikiconf.vim" ]] && [[ ! -e "$HOME/.vim/plugin/vimwiki_settings/vimwikiconf.vim" ]]; then
+		mkdir -p "$HOME/.vim/plugin/vimwiki_settings"
+		ln -s "$(pwd)/vimwikiconf.vim" "$HOME/.vim/plugin/vimwiki_settings/vimwikiconf.vim"
 	fi
 
 }
@@ -70,7 +70,7 @@ function clean() {
 	cleanconf plugin 0
 }
 
-__ScriptVersion="1.2"
+__ScriptVersion="1.3"
 
 #===  FUNCTION  ================================================================
 #         NAME:  usage
@@ -98,15 +98,14 @@ while getopts ":hvict:" opt
 do
 	case $opt in
 
-		h|help     )  usage; exit 0   	;;
-		c|clean    )  clean; exit 0   	;;
-		i|install  )  install; 			;;
-		t|target   )  target=${OPTARG}; ;;
-
-		v|version  )  echo "$0 -- Version $__ScriptVersion"; exit 0   ;;
-
+		h )  usage; exit 0   	;;
+		c )  clean; exit 0   	;;
+		i )  install; 			;;
+		t )  target=${OPTARG}   ;;
+		v )  echo "$0 -- Version $__ScriptVersion"; exit 0   ;;
 		* )  echo -e "\n  Option does not exist : $OPTARG\n"
-		  usage; exit 1   ;;
+		     usage
+             exit 1   ;;
 
 	esac    # --- end of case ---
 done
