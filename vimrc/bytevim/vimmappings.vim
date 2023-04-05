@@ -202,14 +202,8 @@ nnoremap <Leader><F10> z=
 let g:ycm_python_binary_path = '/usr/bin/python3'
 
 " make YCM compatible with UltiSnips (using supertab)
-" let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-let g:ycm_key_list_select_completion = ['<C-k>', '<Down>']
-" let g:ycm_key_list_previous_completion = ['<C-k>', '<Up>']
-" let g:ycm_key_list_previous_completion = ['<Up>']
-" let g:SuperTabDefaultCompletionType = '<C-n>'
-" let g:SuperTabDefaultCompletionType = "<c-x><c-u>"
-" let g:SuperTabDefaultCompletionType = "<c-tab>"
-"
+let g:SuperTabDefaultCompletionType = "context"
+
 " auto close the completion window
 let g:ycm_autoclose_preview_window_after_completion = 1
 " only use the `Down` key to select the first item

@@ -13,7 +13,7 @@ function linkconf() {
 	fpafter=$HOME/.vim/after/$targetdir
 	mkdir -p "$fpafter"
 	echo "$fpafter"
-	for fp in $(ls $confdir); do
+	for fp in $confdir; do
 		fpsource=$(pwd)/$confdir/$fp
 		fptarget=$fpafter/$fp
 		if [[ ! -L $fptarget ]] && [[ ! -e $fptarget ]]; then
@@ -36,7 +36,7 @@ function linkconf() {
 function cleanconf() {
 	ftarget="$HOME/.vim/after/$1"
 	# removedir="$2"
-	for fp in $(ls $ftarget); do
+	for fp in $ftarget; do
 		fptarget=$ftarget/$fp
 		# echo "Cleaning $fptarget"
 		unlink "$fptarget"
@@ -51,11 +51,19 @@ function cleanconf() {
 
 function install() {
 	# linkconf [local source dir] [taregt dir]
+    # Makes symbolic links from files and dirs inside source.
+    # ex. ~/.vim/ftplugin -> $repos/dotfiles/vimrc/ftplugin
 	linkconf ftplugin ftplugin
 	linkconf bytevim  plugin
-	if [[ ! -L "$HOME/.vimrc" ]] && [[ ! -e "$HOME/.vimrc" ]]; then
-		ln -s "$HOME/.vimrc" "$(pwd)/vimrc"
-		echo "pass"
+    # CHeck if vim rc is aleady existing.
+	if [[ -L "$HOME/.vimrc" ]]; then
+        echo "The ~/.vimrc was a symbolic link delete if you want to install a new version with \$ unlink ~/.vimrc"
+    elif [[ -e "$HOME/.vimrc" ]]; then
+        echo "The ~/.vimrc was a file delete if you want to install a new version with \$ rm ~/.vimrc"
+    else
+        echo "Creating symlink for $HOME/.vimrc"
+        ln -s "$(pwd)/vimrc" "$HOME/.vimrc"
+        echo "Done.."
 	fi
 	if [[ ! -L "$HOME/.vim/plugin/vimwiki_settings/vimwikiconf.vim" ]] && [[ ! -e "$HOME/.vim/plugin/vimwiki_settings/vimwikiconf.vim" ]]; then
 		mkdir -p "$HOME/.vim/plugin/vimwiki_settings"
@@ -109,4 +117,4 @@ do
 
 	esac    # --- end of case ---
 done
-shift $(($OPTIND-1))
+# shift $(($OPTIND-1))
