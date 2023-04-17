@@ -202,7 +202,17 @@ nnoremap <Leader><F10> z=
 let g:ycm_python_binary_path = '/usr/bin/python3'
 
 " make YCM compatible with UltiSnips (using supertab)
-let g:SuperTabDefaultCompletionType = "context"
+
+" make YCM compatible with UltiSnips (using supertab)
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+let g:SuperTabDefaultCompletionType = '<C-n>'
+
+" better key bindings for UltiSnipsExpandTrigger
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+
 
 " auto close the completion window
 let g:ycm_autoclose_preview_window_after_completion = 1

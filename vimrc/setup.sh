@@ -27,6 +27,21 @@ function linkconf() {
 	done
 
 }
+
+# Copy the key file to the plugin directory.
+# This is done in order to not have the private keys
+# end up in the public repo.
+function copykeysfile(){
+	fpafter="$HOME/.vim/after/plugin"
+	mkdir -p "$fpafter"
+    if [[ -e "$fpafter/keys.vim" ]]; then
+        echo "Key file existed, Do not overwrite."
+    else
+        cp keys.vim "$fpafter/."
+        echo "Please edit the $fpafter/keys.vim file"
+    fi
+}
+
 # cleanconf unlinks the symlinks in the target diretory
 # and if needed removes the directory where it was stored.
 # $ cleanconf ftranget [removedir]
@@ -53,8 +68,10 @@ function install() {
 	# linkconf [local source dir] [taregt dir]
     # Makes symbolic links from files and dirs inside source.
     # ex. ~/.vim/ftplugin -> $repos/dotfiles/vimrc/ftplugin
+    echo "Starts installation"
 	linkconf ftplugin ftplugin
 	linkconf bytevim  plugin
+    copykeysfile
     # CHeck if vim rc is aleady existing.
 	if [[ -L "$HOME/.vimrc" ]]; then
         echo "The ~/.vimrc was a symbolic link delete if you want to install a new version with \$ unlink ~/.vimrc"
@@ -69,6 +86,7 @@ function install() {
 		mkdir -p "$HOME/.vim/plugin/vimwiki_settings"
 		ln -s "$(pwd)/vimwikiconf.vim" "$HOME/.vim/plugin/vimwiki_settings/vimwikiconf.vim"
 	fi
+    echo "Done with installation"
 
 }
 
