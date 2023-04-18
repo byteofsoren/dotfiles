@@ -89,7 +89,7 @@ Plug 'junegunn/vim-peekaboo'
 " Vim syntax for kiv
 "" Plug 'farfanoide/vim-kivy'
 " suround vim
-" Plug tpope/vim-suound
+Plug 'tpope/vim-surround'
 
 " let g:netrw_nogx = 1 " disable netrw's gx mapping.
 " nmap gx <Plug>(openbrowser-smart-search)
