@@ -2,28 +2,28 @@
 
 
 # linkconf creates symlinks in the .vim/after directory.
-# $ linkconf confdir targetdir
+# $ linkconf sourec installdir
 #
-# confdir: 		Is the local diretory in the repo that the symlink is targeting.
-# targetdir: 	Is the directory in .vim/after/target directory
+# sourcedir: 		Is the local diretory in the repo that the symlink is targeting.
+# installdir: 	Is the directory in .vim/after/target directory
 # 				wher the symlinks are created and later used by vim.
 function linkconf() {
-	confdir=$1
-	targetdir=$2
-	fpafter=$HOME/.vim/after/$targetdir
-	mkdir -p "$fpafter"
-	echo "$fpafter"
-	for fp in $confdir; do
-		fpsource=$(pwd)/$confdir/$fp
-		fptarget=$fpafter/$fp
+	sourcedir="$1"
+	installdir="$2"
+    echo "start link configuration $sourcedir $installdir"
+	installtarget=$HOME/.vim/after/$installdir
+	mkdir -p "$installtarget"
+    find "$sourcedir" -type f | while read -r filepath; do
+        filename=$(basename "$filepath")
+		fpsource=$(pwd)/$filename
+		fptarget=$installtarget/$filename
+        echo "$fptarget -----"
 		if [[ ! -L $fptarget ]] && [[ ! -e $fptarget ]]; then
 			echo "ln -s $fpsource $fptarget done"
 			ln -s "$fpsource" "$fptarget"
 		else
-			echo "Skip $fp"
+			echo "Skip $filename"
 		fi
-
-
 	done
 
 }
@@ -50,18 +50,19 @@ function copykeysfile(){
 # removedir: 	if sett to 1 the .vim/after/removedir is also removed.
 function cleanconf() {
 	ftarget="$HOME/.vim/after/$1"
-	# removedir="$2"
-	for fp in $ftarget; do
-		fptarget=$ftarget/$fp
-		# echo "Cleaning $fptarget"
-		unlink "$fptarget"
-		if [[ ! -e $fptarget ]]; then
-			echo "Cleaning $fptarget DONE"
+	removedir="$2"
+    find "$ftarget" -type l | while read -r fp; do
+        echo "Unlinking $fp"
+		unlink "$fp"
+		if [[ ! -e $fp ]]; then
+			echo "Cleaning $fp DONE"
 		else
-			echo "Cleaning $fptarget FAIL"
+			echo "Cleaning $fp FAIL"
 		fi
 	done
-
+    if [[ "$removedir" -eq 1 ]]; then
+        rm -r "$ftarget"
+    fi
 }
 
 function install() {
@@ -92,8 +93,12 @@ function install() {
 
 function clean() {
 	# cleanconf [target dir] [delete dir yes=1, no=0]
-	cleanconf ftplugin  0
-	cleanconf plugin 0
+	cleanconf ftplugin  1
+	cleanconf plugin 1
+    unlink "$HOME/.vimrc"
+    unlink "$HOME/.vim/plugin/vimwiki_settings/vimwikiconf.vim"
+    sudo rm -rf "$HOME/.vim/plugged"
+    rm -rf "$HOME/.vim/autoload"
 }
 
 __ScriptVersion="1.3"

@@ -183,7 +183,7 @@ Plug 'joshdick/onedark.vim'
 "" Custom bundles
 "*****************************************************************************
 "You complete me
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clangd-completer' }
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clangd-completer --ninja --rust-completer' }
 
 " ycm keybindings to fix tab completion
 Plug 'ervandew/supertab'
