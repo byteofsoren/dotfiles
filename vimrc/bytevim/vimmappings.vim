@@ -220,6 +220,15 @@ let g:ycm_autoclose_preview_window_after_completion = 1
 " let g:ycm_key_list_select_completion = ['<Down>']
 
 
+" YouCompleteMe bindings for searching
+nmap <leader>yfw <Plug>(YCMFindSymbolInWorkspace)
+nmap <leader>yfd <Plug>(YCMFindSymbolInDocument)
+augroup ycm_ft_maps
+    autocmd!
+    autocmd FileType c,cpp,objc,objcpp,cuda,cs,go,java,javascript,python,rust,typescript  nnoremap <leader>yfg <Plug>(GoTo)
+    autocmd FileType c, cpp, objc, objcpp, cuda, cs, java, javascript, python, typescript nnoremap gg <Plug>(GoToSymbol) <CR>
+augroup END
+
 
 
 " Ultisnis settings

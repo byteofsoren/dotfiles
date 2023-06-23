@@ -61,6 +61,8 @@ let maplocalleader = ","
 "" Auco coment setup for .Xresorces
 autocmd FileType xdefaults setlocal commentstring=!\ %s
 
+"" Set spell checking on by default for the filetypes
+autocmd FileType text,markdown,latex,md setlocal spell
 
 "" Groff
 autocmd BufNewFile,BufRead *.groff set spell

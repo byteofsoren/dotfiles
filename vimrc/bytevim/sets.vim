@@ -59,6 +59,23 @@ endif
 " Open buffes as tabs
 set switchbuf=usetab
 
+"*****************************************************************************
+"" Functional sets
+"*****************************************************************************
+
+" Use a local vim rc for every path in the variable
+" let home_directory = expand('$HOME')
+" let localPaths = []
+
+" " Adde paths for each local vimrc
+" call add(localPaths, home_directory . '/repos/vimwiki')
+" " call add(localPaths, home_directory . '/some/other/secure/path')
+
+" let localVimrc = '^\(' . join(localPaths, '\|') . '\)'
+" if getcwd() =~# localVimrc
+"     set exrc
+"     " set secure exrc
+" endif
 
 
 "*****************************************************************************
@@ -136,3 +153,5 @@ if exists("*fugitive#statusline")
   set statusline+=%{fugitive#statusline()}
 endif
 
+"" YouCompleteMe settings
+highlight YcmErrorLine guibg=#3f0000

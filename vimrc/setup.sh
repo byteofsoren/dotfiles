@@ -15,12 +15,16 @@ function linkconf() {
 	mkdir -p "$installtarget"
     find "$sourcedir" -type f | while read -r filepath; do
         filename=$(basename "$filepath")
-		fpsource=$(pwd)/$filename
+		fpsource=$(pwd)/bytevim/$filename
 		fptarget=$installtarget/$filename
         echo "$fptarget -----"
 		if [[ ! -L $fptarget ]] && [[ ! -e $fptarget ]]; then
 			echo "ln -s $fpsource $fptarget done"
-			ln -s "$fpsource" "$fptarget"
+            if [[ -f "$fpsource" ]]; then
+			    ln -s "$fpsource" "$fptarget"
+            else
+                echo "Error the file $fpsource did not exists"
+            fi
 		else
 			echo "Skip $filename"
 		fi
@@ -91,17 +95,37 @@ function install() {
 
 }
 
+# Confirm function.
+# This function asks the user to select ether yes/no in a prompt.
+# How to use:
+#   if confirm "Do you wish to delete this file"; then
+#     rm file
+#   fi
+confirm() {
+    while true; do
+        read -r -p "$1 Y/n: " yn
+        case $yn in
+            [Yy]* ) return 0;;
+            [Nn]* ) return 1;;
+            * ) echo "Please answer yes (Y/y) or no (N/n).";;
+        esac
+    done
+}
 function clean() {
 	# cleanconf [target dir] [delete dir yes=1, no=0]
 	cleanconf ftplugin  1
 	cleanconf plugin 1
-    unlink "$HOME/.vimrc"
-    unlink "$HOME/.vim/plugin/vimwiki_settings/vimwikiconf.vim"
-    sudo rm -rf "$HOME/.vim/plugged"
-    rm -rf "$HOME/.vim/autoload"
+    if confirm "Do you want to unlink the vimrc?"; then
+        unlink "$HOME/.vimrc"
+        unlink "$HOME/.vim/plugin/vimwiki_settings/vimwikiconf.vim"
+    fi
+    if confirm "Do you want DELETE the plugged folder? "; then
+        sudo rm -rf "$HOME/.vim/plugged"
+        rm -rf "$HOME/.vim/autoload"
+    fi
 }
 
-__ScriptVersion="1.3"
+__ScriptVersion="1.5"
 
 #===  FUNCTION  ================================================================
 #         NAME:  usage
