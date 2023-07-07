@@ -69,6 +69,94 @@ function cleanconf() {
     fi
 }
 
+# Function to create the symlink between the vimrc and $HOME/.vimrc file
+# Arguments
+#   None
+# Returns
+#   0 Fail
+#   1 OK
+function install_vimrc() {
+    # CHeck if vim rc is aleady existing.
+	if [[ -L "$HOME/.vimrc" ]] ; then
+        symlink_target=$(readlink -f "$HOME/.vimrc")                # Target of the .vimrc link
+        script_dir=$(dirname "$(readlink -f "$0")")                 # Contains the current directory
+        expected_target="$script_dir/$(basename "$symlink_target")" # Contains the path and file name in the current dir
+        if [[ "$symlink_target" == "$expected_target" ]]; then
+            echo "The .vimrc symlink is already created and points to this repo. Do nothing"
+        else
+            echo "The symlink $HOME/.vimrc existed."
+            if confirm "Remove the faulty .vimrc symlink?"; then
+                unlink "$HOME/.vimrc"
+            else
+                echo "Did not remove the symlink. Aborting the installation"
+                return 0
+            fi
+        fi
+    elif [[ -e "$HOME/.vimrc" ]]; then
+        echo "There is already $HOME/.vimrc file."
+        if confirm "Delete the $HOME/.vimrc file"; then
+            echo "Deleting the $HOME/.vimrc file"
+            rm -rf "$HOME/.vimrc"
+        else
+            echo "Did not delete the $HOME/.vimrc file. Aborting the installer"
+            return 0
+        fi
+    fi
+
+
+    # New symlink for .vimrc
+    echo "Creating new symlink between $(pwd)/vimrc and $HOME/.vimrc"
+    ln -s "$(pwd)/vimrc" "$HOME/.vimrc"
+    echo "Done creating new symlink"
+    return 1
+}
+
+# Function to install the skeleton template files
+# Arguments:
+#   None
+# Returns:
+#   0 Fail
+#   1 OK
+function install_skeletons() {
+    echo "Starting to install the skeleton templates."
+    target_dir="$HOME/.vim/skeletons"
+    if [[ -L "$target_dir" ]]; then
+        symlink_target=$(readlink -f "$target_dir")
+        expected_target="$(pwd)/skeletons"
+        if [[ "$target_dir" == "$expected_target" ]]; then
+            echo "The $target_dir was a symlink and linked to the current repo. Do nothing"
+        else
+            echo "The $target_dir was a symlink but do not target the current repo."
+            if confirm "Delete the old symlink"; then
+                unlink "$target_dir"
+            else
+                echo "Did not remove the $target_dir symlink. Aborting the installer"
+                return 0
+            fi
+        fi
+    elif [[ -d "$target_dir" ]]; then
+        echo "The $target_dir was a directory"
+        if confirm "Delete the $target_dir directory before creating the links"; then
+            rm -rf "$target_dir"
+            echo "Removed the target. Done"
+        else
+            echo "Did not remove the $target_dir. Aborting"
+            return 0
+        fi
+
+    fi
+
+    echo "Creating the symlink $(pwd)/skeletons to $target_dir"
+    if [[ -d "$(pwd)/skeletons" ]]; then
+        ln -s "$(pwd)/skeletons" "$target_dir"
+        echo "Done"
+    else
+        echo "The $(pwd)/skeletons directory did not exists. Abort"
+        return 0
+    fi
+    return 1
+}
+
 function install() {
 	# linkconf [local source dir] [taregt dir]
     # Makes symbolic links from files and dirs inside source.
@@ -77,26 +165,29 @@ function install() {
 	linkconf ftplugin ftplugin
 	linkconf bytevim  plugin
     copykeysfile
-    # CHeck if vim rc is aleady existing.
-	if [[ -L "$HOME/.vimrc" ]]; then
-        echo "The ~/.vimrc was a symbolic link delete if you want to install a new version with \$ unlink ~/.vimrc"
-    elif [[ -e "$HOME/.vimrc" ]]; then
-        echo "The ~/.vimrc was a file delete if you want to install a new version with \$ rm ~/.vimrc"
-    else
-        echo "Creating symlink for $HOME/.vimrc"
-        ln -s "$(pwd)/vimrc" "$HOME/.vimrc"
-        echo "Done.."
-	fi
+
+    # Create symbolik link to the $HOME/.vimrc
+    install_vimrc
+    install_skeletons
+
+    # VimWiki settings.
 	if [[ ! -L "$HOME/.vim/plugin/vimwiki_settings/vimwikiconf.vim" ]] && [[ ! -e "$HOME/.vim/plugin/vimwiki_settings/vimwikiconf.vim" ]]; then
 		mkdir -p "$HOME/.vim/plugin/vimwiki_settings"
 		ln -s "$(pwd)/vimwikiconf.vim" "$HOME/.vim/plugin/vimwiki_settings/vimwikiconf.vim"
 	fi
+
+    # Symlink for Skeletons.
+
+
     echo "Done with installation"
 
 }
 
 # Confirm function.
 # This function asks the user to select ether yes/no in a prompt.
+# Arguments:
+#   $1 Prompt text
+#
 # How to use:
 #   if confirm "Do you wish to delete this file"; then
 #     rm file

@@ -16,19 +16,6 @@ let python_highlight_all = 1
 "    call remote_startserver('VIM')
 "endif
 
-" Turn of latex calback to avoid error as an alternative to the remote server
-let g:vimtex_compiler_latexmk = {'callback' : 0}
-let g:syntastic_tex_checkers = ['lacheck']
-
-" Add flavor to vim-tex
-let g:tex_flavor = 'latex'
-" Disable custom warnings based on regexp
-let g:qf_auto_open_quickfix = 0
-let g:vimtex_quickfix_ignore_filters = [
-      \ 'Marginpar on page',
-      \ 'unmatched',
-      \ 'unmatched "beginning',
-      \]
 
 " Color setups
 " hi Conceal guibg=Blue guifg=White

@@ -204,11 +204,6 @@ let g:arduino_home_dir = $HOME . ".arduino15"
 "
 
 
-"Tex conseal turn off because its anoiying
-" let g:tex_conceal = ''
-" let g:vimtex_syntax_conceal_default = 0
-" let g:vimtex_syntax_conceal = { 'accents' : 1 }
-" let g:vimtex_syntax_conceal = []
 
 "*****************************************************************************
 "*****************************************************************************
