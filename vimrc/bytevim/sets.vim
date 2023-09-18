@@ -42,11 +42,6 @@ set iskeyword-=_
 "" Directories for swp files
 set nobackup
 set noswapfile
-" Needed for undotree
-if has("persistent_undo")
-    set undodir=$HOME."/.undodir"
-    set undofile
-endif
 
 set fileformats=unix,dos,mac
 
@@ -121,7 +116,6 @@ else
 
 endif
 
-
 if &term =~ '256color'
   set t_ut=
 endif
@@ -153,5 +147,3 @@ if exists("*fugitive#statusline")
   set statusline+=%{fugitive#statusline()}
 endif
 
-"" YouCompleteMe settings
-highlight YcmErrorLine guibg=#3f0000

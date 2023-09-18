@@ -3,13 +3,10 @@
 "" Autocmd Rules
 "*****************************************************************************
 
-
-
-
 "" The PC is fast enough, do syntax highlight syncing from start unless 200 lines
 augroup vimrc-sync-fromstart
   autocmd!
-  autocmd BufEnter * :syntax sync maxlines=200
+  autocmd BufEnter * :syntax sync maxlines=300
 augroup END
 
 "" Remember cursor position
@@ -18,11 +15,6 @@ augroup vimrc-remember-cursor-position
   autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 augroup END
 
-" "" txt
-" augroup vimrc-wrapping
-"   autocmd!
-"   autocmd BufRead,BufNewFile *.txt call s:setupWrapping()
-" augroup END
 
 "" make/cmake
 augroup vimrc-make-cmake
@@ -55,19 +47,24 @@ au BufNewFile,BufRead *.groff set filetype=groff
 let g:syntastic_rst_checkers=['sphinx']
 
 "*****************************************************************************
-"" Custom configs
+"" Custom configuration upon file types or languages
 "*****************************************************************************
-"
-" tex
-autocmd BufNewFile,BufRead *.tex set filetype=tex
-autocmd BufNewFile,BufRead *.tex set spell
 
+"" Fix consseal levels in LaTeX,,,, files.
+"" With this the conceal level is changed to 0
+"" in insert mode and 2 in normal mode.
+" augroup vimrc-tex-autocmds
+"     autocmd!
+"     autocmd InsertEnter *.tex set conceallevel=0
+"     autocmd InsertLeave *.tex set conceallevel=2
+"     autocmd BufNewFile,BufRead *.tex set filetype=tex
+"     autocmd BufNewFile,BufRead *.tex set spell
+" augroup END
 
 " vhdl testbench filetype
 autocmd BufNewFile,BufRead *.vht set filetype=vhdl
 
-
-
-" c
-autocmd FileType c setlocal tabstop=4 shiftwidth=4 expandtab
-autocmd FileType cpp setlocal tabstop=4 shiftwidth=4 expandtab
+" Change the tab settings for programming files
+augroup vimrc-programming-tabsettings
+    autocmd FileType c,cpp setlocal tabstop=4 shiftwidth=4 expandtab
+augroup END

@@ -19,7 +19,8 @@ let python_highlight_all = 1
 
 " Color setups
 " hi Conceal guibg=Blue guifg=White
-let g:tex_conceal="sabgm"
+let g:tex_conceal = ''
+set conceallevel=0
 
 " Makes vim transparent.
 hi Normal guibg=NONE ctermbg=NONE
@@ -63,21 +64,6 @@ let g:syntastic_aggregate_errors = 1
 " Remove the unwanted space problem in latex
 let g:syntastic_tex_lacheck_quiet_messages = { 'regex': '\Vpossible unwanted space at' }
 
-" -----------------------------------------------------------
-" == ctags extra tagfile for Linux kernel ===
-"":set tags+=~/linux-4.20-rc4/.linux-4.20-rc4
-set tags+=tags
-let g:ycm_collect_identifiers_from_tags_files = 1
-" -----------------------------------------------------------
-
-" --- ycm configurations for cland if needed: ------
-" Let clangd fully control code completion
-let g:ycm_clangd_uses_ycmd_caching = 0  " <<< Inpacts preformence on vim
-" Use installed clangd, not YCM-bundled clangd which doesn't get updates.
-let g:ycm_clangd_binary_path = exepath("clangd")
-" let g:ycm_clangd_args = ['-log=verbose', '-pretty', '-query-driver=/usr/bin/west']
-" let g:ycm_clangd_args = ['-log=verbose', '-pretty', '-query-driver=/usr/bin/clang++']
-let g:ycm_clangd_args = ['-log=verbose', '-pretty']
 
 
 

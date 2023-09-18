@@ -46,15 +46,24 @@ Plug 'vim-scripts/grep.vim'
 "Plug 'vim-scripts/CSApprox'
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'Raimondi/delimitMate'
+" --- Easy align of code ---
+" Configfile bytevim/easy-align-conf.vim
+Plug 'junegunn/vim-easy-align'
 
 " --- GUI modifiers ---
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+" IndentLine shows a vertical indentation | for correct indentation.
+Plug 'Yggdroot/indentLine'
+"  Vim signature shows the vim marks grapicaly.
+Plug 'kshenoy/vim-signature'
 
 " --- Vim pane tools ---
 Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'majutsushi/tagbar'
+" pekaboo shos the registers before yank/pase from regestry when pressing " or @
+Plug 'junegunn/vim-peekaboo'
 
 " --- Debugging tools ---
 Plug 'szw/vim-maximizer'
@@ -66,39 +75,26 @@ Plug 'wellle/context.vim'
 " --- Utility tools ---
 Plug 'mbbill/undotree'
 "" Removed aw-watcher-vim due to bug for now take it back later
-"Plug 'ActivityWatch/aw-watcher-vim'
 
 
 " ---- Sytax checkers ----
-Plug 'scrooloose/syntastic'
-" Plug 'dense-analysis/ale'
+" Plug 'scrooloose/syntastic' DEPRECATED
+Plug 'dense-analysis/ale'
 " ------------------------
-Plug 'Yggdroot/indentLine'
-Plug 'avelino/vim-bootstrap-updater'
+" Plug 'avelino/vim-bootstrap-updater'
 
 
 
 " --- Navigation ---
-"  Vim signature shows the vim marks grapicaly.
-Plug 'kshenoy/vim-signature'
+" Pairs of handy bracket mappings
+Plug 'tpope/vim-unimpaired'
 
-" pekaboo shos the registers before yank/pase from regestry when pressing " or @
-Plug 'junegunn/vim-peekaboo'
 
 
 " Vim syntax for kiv
 "" Plug 'farfanoide/vim-kivy'
 " suround vim
 Plug 'tpope/vim-surround'
-
-" let g:netrw_nogx = 1 " disable netrw's gx mapping.
-" nmap gx <Plug>(openbrowser-smart-search)
-" vmap gx <Plug>(openbrowser-smart-search)
-"
-
-
-
-
 
 " ---[ Language estensions ]---
 " PlantUML
@@ -255,6 +251,6 @@ augroup vimrc-python
       \ cinwords=if,elif,else,for,while,try,except,finally,def,class,with
 augroup END
 
-" let g:vimwiki_global_ext = 0
-" let g:vimwiki_ext2syntax = {'.wiki': 'markdown', '.md':'markdown'}
-
+" Conceallevel set to 1
+autocmd BufEnter *.tex set conceallevel=1
+autocmd BufEnter *.tex set concealcursor=n

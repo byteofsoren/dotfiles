@@ -149,9 +149,8 @@ nnoremap <Leader>o :.Gbrowse<CR>
 " nnoremap <silent> <F2> :NERDTreeFind<CR>
 " nnoremap <silent> <F3> :NERDTreeToggle<CR>
 
-"" Undo tree show
-nnoremap <F5> :UndotreeToggle<CR>                           " Toggle undo pannel
-:inoremap <F5> <C-R>=strftime("diary/%Y-%m-%d-%a")<CR>
+"" Insert the current date using F5
+inoremap <F5> <C-R>=strftime("diary/%Y-%m-%d-%a")<CR>
 
 " Spellcheck change language between en_us and sv with F7 and F8
 nnoremap <silent> <F7> :echo ToggleSpell("en_us")<CR>			" Toggle English spell.
@@ -179,69 +178,9 @@ noremap ;; ;
 imap <F12> <Esc>[s1z=`]a
 " Spell cheking macro binding to mappp numpad to the ctrl+k4 spell
 " sugioestions.
-nnoremap <Leader><F8> [s
-nnoremap <Leader><F9> ]s
-nnoremap <Leader><F10> z=
-" nnoremap <Leader> <F7> zg
-" nnoremap <Leader> <F8> zug
 
-
-" Gramarous bindings:
-" let g:grammarous#hooks = {}
-" function! g:grammarous#hooks.on_check(errs) abort
-"     nmap <buffer><C-n> <Plug>(grammarous-move-to-next-error)
-"     nmap <buffer><C-p> <Plug>(grammarous-move-to-previous-error)
-" endfunction
-
-" function! g:grammarous#hooks.on_reset(errs) abort
-"     nunmap <buffer><C-n>
-"     nunmap <buffer><C-p>
-" endfunction
-
-" YCM completer setup:
-let g:ycm_python_binary_path = '/usr/bin/python3'
 
 " make YCM compatible with UltiSnips (using supertab)
+let g:SuperTabDefaultCompletionType = '<tab>'
 
-" make YCM compatible with UltiSnips (using supertab)
-let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-let g:SuperTabDefaultCompletionType = '<C-n>'
-
-" better key bindings for UltiSnipsExpandTrigger
-let g:UltiSnipsExpandTrigger = "<tab>"
-let g:UltiSnipsJumpForwardTrigger = "<tab>"
-let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
-
-
-" auto close the completion window
-let g:ycm_autoclose_preview_window_after_completion = 1
-" only use the `Down` key to select the first item
-" let g:ycm_key_list_select_completion = ['<Down>']
-
-
-" YouCompleteMe bindings for searching
-nmap <leader>yfw <Plug>(YCMFindSymbolInWorkspace)
-nmap <leader>yfd <Plug>(YCMFindSymbolInDocument)
-augroup ycm_ft_maps
-    autocmd!
-    autocmd FileType c,cpp,objc,objcpp,cuda,cs,go,java,javascript,python,rust,typescript  nnoremap <leader>yfg <Plug>(GoTo)
-    autocmd FileType c, cpp, objc, objcpp, cuda, cs, java, javascript, python, typescript nnoremap gg <Plug>(GoToSymbol) <CR>
-augroup END
-
-
-
-" Ultisnis settings
-" let g:UltiSnipsExpandTrigger="<c-tab>"
-" let g:UltiSnipsJumpForwardTrigger="<tab>"
-" let g:UltiSnipsJumpBackwardTrigger="<c-b>"
-let g:UltiSnipsEditSplit="vertical"
-
-" better key bindings for UltiSnipsExpandTrigger
-" let g:UltiSnipsExpandTrigger = "<tab>"
-"let g:UltiSnipsExpandTrigger="<cr>"
-" let g:UltiSnipsExpandTrigger="<tab>"
-" let g:UltiSnipsJumpForwardTrigger = "<tab>"
-" let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
-"
 
