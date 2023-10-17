@@ -126,6 +126,7 @@ Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
 Plug 'mzlogin/vim-markdown-toc'
 Plug 'vimwiki/vimwiki', { 'branch': 'dev' }
+Plug 'mattn/calendar-vim'
 " --- If taskwarior and time warrior is installed use the plugins.
 if executable("task")
     Plug 'tools-life/taskwiki'

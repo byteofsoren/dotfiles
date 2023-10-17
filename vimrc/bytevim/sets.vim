@@ -63,7 +63,6 @@ set switchbuf=usetab
 " let localPaths = []
 
 " " Adde paths for each local vimrc
-" call add(localPaths, home_directory . '/repos/vimwiki')
 " " call add(localPaths, home_directory . '/some/other/secure/path')
 
 " let localVimrc = '^\(' . join(localPaths, '\|') . '\)'
