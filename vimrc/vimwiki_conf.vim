@@ -1,15 +1,8 @@
 " VimWiki configuration file.
 
-" au FileType vimwiki setlocal syntax=markdown
-" " let g:vimwiki_ext2syntax = {'.wiki': 'markdown', '.md':'markdown'}
-" let g:vim_markdown_folding_disabled = 1
-" let g:vimwiki_ext2syntax = {}
-" let g:vimwiki_global_ext = 0
-
 let g:vimwiki_list = [{
                     \ 'path': '/home/soren/repos/vimwiki',
                     \ 'syntax': 'markdown', 'ext': '.md'}]
-
 
 " When using markdown this stops vimwiki from treating orher markdorw files as
 " part of the wiki.

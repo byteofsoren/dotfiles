@@ -64,6 +64,9 @@ let g:syntastic_rst_checkers=['sphinx']
 " vhdl testbench filetype
 autocmd BufNewFile,BufRead *.vht set filetype=vhdl
 
+" markdown files
+autocmd BufRead,BufNewFile *.md set filetype=markdown
+
 " Change the tab settings for programming files
 augroup vimrc-programming-tabsettings
     autocmd FileType c,cpp setlocal tabstop=4 shiftwidth=4 expandtab

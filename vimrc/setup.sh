@@ -14,7 +14,7 @@ function linkconffiles() {
 	mkdir -p "$installtarget"
 	find "$sourcedir" -type f | while read -r filepath; do
 		filename=$(basename "$filepath")
-		fpsource=$(pwd)/bytevim/$filename
+		fpsource=$(pwd)/$sourcedir/$filename
 		fptarget=$installtarget/$filename
 		echo "$fptarget -----"
 		if [[ ! -L $fptarget ]] && [[ ! -e $fptarget ]]; then
@@ -121,7 +121,19 @@ function install_skeletons() {
 	if [[ -L "$target_dir" ]]; then
 		symlink_target=$(readlink -f "$target_dir")
 		expected_target="$(pwd)/skeletons"
+		difference=$(diff <(echo "$symlink_target") <(echo "$expected_target"))
+		echo "Difference: $difference"
 
+		if [ -z "$difference" ]; then
+			echo "The strings are the same, but the comparison failed due to hidden characters."
+			cat -vET "$symlink_target"
+			cat -vET "$expected_target"
+		else
+			echo "The symlink does not point to the desired directory."
+			echo "Difference: $difference"
+		fi
+
+		echo ""
 		if [[ "$(realpath "$target_dir")" == "$(realpath "$expected_target")" ]]; then
 			echo "The $target_dir was a symlink and linked to the current repo. Do nothing"
 		else

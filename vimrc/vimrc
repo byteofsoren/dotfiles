@@ -255,3 +255,4 @@ augroup END
 " Conceallevel set to 1
 autocmd BufEnter *.tex set conceallevel=1
 autocmd BufEnter *.tex set concealcursor=n
+autocmd BufRead,BufNewFile *.md set filetype=markdown

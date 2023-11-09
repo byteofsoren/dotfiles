@@ -35,5 +35,5 @@ highlight YcmErrorLine guibg=#3f0000
 " <space>yfw to find the symbol in the workspace and yfd symbol in the current document.
 nmap <leader>yfw <Plug>(YCMFindSymbolInWorkspace)
 nmap <leader>yfd <Plug>(YCMFindSymbolInDocument)
-
+nnoremap <leader>ygd :YcmCompleter GoToDefinition <CR>
 
