@@ -37,7 +37,8 @@ autocmd Filetype tex setl updatetime=1
 autocmd FileType xdefaults setlocal commentstring=!\ %s
 
 "" Set spell checking on by default for the filetypes
-autocmd FileType text,markdown,latex,md setlocal spell
+" autocmd FileType text,markdown,latex,md setlocal spell
+" Optional: Restore last language on FileType
 
 "" Groff
 autocmd BufNewFile,BufRead *.groff set spell
@@ -46,6 +47,9 @@ au BufNewFile,BufRead *.groff set filetype=groff
 "" Spinx documentation
 let g:syntastic_rst_checkers=['sphinx']
 
+"" FreeCAD Macro files is python
+autocmd BufNewFile,BufRead *.FCMacro set filetype=python
+
 "*****************************************************************************
 "" Custom configuration upon file types or languages
 "*****************************************************************************
@@ -53,13 +57,13 @@ let g:syntastic_rst_checkers=['sphinx']
 "" Fix consseal levels in LaTeX,,,, files.
 "" With this the conceal level is changed to 0
 "" in insert mode and 2 in normal mode.
-" augroup vimrc-tex-autocmds
-"     autocmd!
-"     autocmd InsertEnter *.tex set conceallevel=0
-"     autocmd InsertLeave *.tex set conceallevel=2
-"     autocmd BufNewFile,BufRead *.tex set filetype=tex
-"     autocmd BufNewFile,BufRead *.tex set spell
-" augroup END
+augroup vimrc-tex-autocmds
+    autocmd!
+    autocmd InsertEnter *.tex set conceallevel=0
+    autocmd InsertLeave *.tex set conceallevel=0
+    " autocmd BufNewFile,BufRead *.tex set filetype=tex
+    autocmd BufNewFile,BufRead *.tex set spell
+augroup END
 
 " vhdl testbench filetype
 autocmd BufNewFile,BufRead *.vht set filetype=vhdl

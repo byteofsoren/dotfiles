@@ -1,9 +1,24 @@
 " YouCompleteMe(YCM) A code-completion engine for Vim.
 augroup ycm_ft_maps
     autocmd!
-    autocmd FileType c,cpp,objc,objcpp,cuda,cs,go,java,javascript,python,rust,typescript  nnoremap <leader>yfg <Plug>(GoTo)
-    autocmd FileType c,cpp,objc,objcpp,cuda,cs,java,javascript,python,typescript nnoremap <leader>ygg <Plug>(GoToSymbol) <CR>
+    " autocmd FileType c,cpp,objc,objcpp,cuda,cs,go,java,javascript,python,rust,typescript nunmap gd
+    " autocmd FileType c,cpp,objc,objcpp,cuda,cs,java,javascript,python,typescript nunmap <leader>gd
+
+    autocmd FileType c,cpp,objc,objcpp,cuda,cs,go,java,javascript,python,rust,typescript    nnoremap gd     :YcmCompleter GoTo<CR>
+    autocmd FileType c,cpp,objc,objcpp,cuda,cs,go,java,javascript,python,rust,typescript    nnoremap gs     <Plug>(YCMFindSymbolInWorkspace)
+    autocmd FileType c,cpp,objc,objcpp,cuda,cs,go,java,javascript,python,rust,typescript    nnoremap gt     :YcmCompleter GetType<CR>
+    autocmd FileType c,cpp,objc,objcpp,cuda,cs,go,java,javascript,python,rust,typescript    nnoremap gf     :YcmCompleter FixIt<CR>
+    autocmd FileType c,cpp,objc,objcpp,cuda                                                 nnoremap gi     :YcmCompleter GoToInclude<CR>
+    autocmd FileType c,cpp,objc,objcpp,cuda,cs,go,java,javascript,python,rust,typescript    nnoremap <F5>   :YcmForceCompileAndDiagnostics<CR>
 augroup END
+
+
+"python with virtualenv support
+" How to use:
+" $ pipx install package-name
+" $ virtualenv .venv
+" $ vim filename.py
+let pipx_venv_path = system('')
 
 " -----------------------------------------------------------
 " == ctags extra tagfile for Linux kernel ===
@@ -13,13 +28,21 @@ let g:ycm_collect_identifiers_from_tags_files = 1
 " -----------------------------------------------------------
 
 " --- ycm configurations for cland if needed: ------
+"
 " Let clangd fully control code completion
 let g:ycm_clangd_uses_ycmd_caching = 0  " <<< Inpacts preformence on vim
+
 " Use installed clangd, not YCM-bundled clangd which doesn't get updates.
 let g:ycm_clangd_binary_path = exepath("clangd")
+
 " let g:ycm_clangd_args = ['-log=verbose', '-pretty', '-query-driver=/usr/bin/west']
 " let g:ycm_clangd_args = ['-log=verbose', '-pretty', '-query-driver=/usr/bin/clang++']
 let g:ycm_clangd_args = ['-log=verbose', '-pretty']
+
+" Enable debug mode if you need to write a .ycm_extra_conf.py file
+" let g:ycm_server_log_level = 'debug'
+" let g:ycm_server_log_file = "/tmp/ycmd_server_debug.log"
+
 "" Give path to the python binary
 let g:ycm_python_binary_path = '/usr/bin/python3'
 

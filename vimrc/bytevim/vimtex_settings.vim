@@ -19,17 +19,17 @@ let g:vimtex_compiler_latexmk = {
 " let g:tex_flavor = 'latex'
 " Disable custom warnings based on regexp
 " let g:qf_auto_open_quickfix = 0
-" let g:vimtex_quickfix_ignore_filters = [
-"       \ 'Marginpar on page',
-"       \ 'unmatched',
-"       \ 'unmatched "beginning',
-"       \]
+let g:vimtex_quickfix_ignore_filters = [
+      \ 'Marginpar on page',
+      \ 'unmatched',
+      \ 'unmatched "beginning',
+      \]
 
 " viewer method:
-let g:vimtex_view_method = 'mupdf'
+let g:vimtex_view_method = 'zathura'
 
 " Or with a generic interface:
-let g:vimtex_view_general_viewer = 'mupdf'
+let g:vimtex_view_general_viewer = 'zathura'
 " let g:vimtex_view_general_options = '--unique file:@pdf\#src:@line@tex'
 
 " Most VimTeX mappings rely on localleader and this can be changed with the

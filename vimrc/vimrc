@@ -37,15 +37,37 @@ call plug#begin(expand('~/.vim/plugged'))
 
 "*****************************************************************************
 "" Plug install packages
+
 "*****************************************************************************
+" commentary.vim: comment stuff out
 Plug 'tpope/vim-commentary'
+"*****************************************************************************
+
+"*****************************************************************************
+" Fugitive is the premier Vim plugin for Git.
+" Or maybe it's the premier Git plugin for Vim? Either way, it's "so awesome, it should be illegal".
+" That's why it's called Fugitive.
 Plug 'tpope/vim-fugitive'
+"*****************************************************************************
+
 " Plug 'airblade/vim-gitgutter'
+"*****************************************************************************
+" Grep search tools integration with Vim
 Plug 'vim-scripts/grep.vim'
-"" Perhaps noot needed and is bugged right now.
-"Plug 'vim-scripts/CSApprox'
+"*****************************************************************************
+
+"*****************************************************************************
+" Highlights trailing whitespace in red and provides :FixWhitespace to fix it.
 Plug 'bronson/vim-trailing-whitespace'
+"*****************************************************************************
+
+"*****************************************************************************
+" This plug-in provides automatic closing of quotes, parenthesis, brackets,
+" etc., besides some other related features that should make your time in insert mode a little bit easier,
+" like syntax awareness (will not insert the closing delimiter in comments and other configurable regions),
+" and expansions (off by default), and some more.
 Plug 'Raimondi/delimitMate'
+"*****************************************************************************
 " --- Easy align of code ---
 " Configfile bytevim/easy-align-conf.vim
 Plug 'junegunn/vim-easy-align'
@@ -54,6 +76,7 @@ Plug 'junegunn/vim-easy-align'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 " IndentLine shows a vertical indentation | for correct indentation.
+" Plug 'szw/vim-maximizer' " <- Out of date 8 years old
 Plug 'Yggdroot/indentLine'
 "  Vim signature shows the vim marks grapicaly.
 Plug 'kshenoy/vim-signature'
@@ -66,22 +89,33 @@ Plug 'majutsushi/tagbar'
 Plug 'junegunn/vim-peekaboo'
 
 " --- Debugging tools ---
-Plug 'szw/vim-maximizer'
+"*****************************************************************************
+" vimspector - A multi-language debugging system for Vim
+" Suports multiple languages but mostly tested for C++, Pytån and TCL.:w
 Plug 'puremourning/vimspector'
+" Config: bytevim/vimspector_config.vim
+"*****************************************************************************
 
+"*****************************************************************************
 " Context vim shows in wich context you are working for long function or loops
 Plug 'wellle/context.vim'
+"*****************************************************************************
 
 " --- Utility tools ---
+"*****************************************************************************
+" Undotree visualizes the undo history and makes it easy to browse and switch between different undo branches.
 Plug 'mbbill/undotree'
-"" Removed aw-watcher-vim due to bug for now take it back later
+"*****************************************************************************
 
 
 " ---- Sytax checkers ----
-" Plug 'scrooloose/syntastic' DEPRECATED
+"*****************************************************************************
+" ALE (Asynchronous Lint Engine) is a plugin providing linting (syntax checking and semantic errors)
+" in NeoVim 0.6.0+ and Vim 8.0+ while you edit your text files, and acts as a
+" Vim Language Server Protocol client.
 Plug 'dense-analysis/ale'
-" ------------------------
-" Plug 'avelino/vim-bootstrap-updater'
+" Config file: bytevim/ale_conf.vim
+"*****************************************************************************
 
 
 
@@ -103,11 +137,11 @@ Plug 'aklt/plantuml-syntax'
 Plug 'tyru/open-browser.vim'
 
 " --- Arduino ---
-Plug 'stevearc/vim-arduino'
-Plug 'amal-khailtash/vim-xtcl-syntax', {'for': 'tcl'}
+" Plug 'stevearc/vim-arduino'
+" Plug 'amal-khailtash/vim-xtcl-syntax', {'for': 'tcl'}
 
 " --- TypeScript usid in native script ----
-Plug 'leafgarland/typescript-vim'
+" Plug 'leafgarland/typescript-vim'
 
 " --- OpenScad ---
 " Plug 'sirtaj/vim-openscad'
@@ -117,16 +151,17 @@ Plug 'leafgarland/typescript-vim'
 "
 " --- LaTeX ---
 Plug 'lervag/vimtex'
-"Plug 'dpelle/vim-LanguageTool'
-"Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
-Plug 'rhysd/vim-grammarous'
+Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
 
-" --- VimWiki ---
-Plug 'godlygeek/tabular'
-Plug 'plasticboy/vim-markdown'
-Plug 'mzlogin/vim-markdown-toc'
-Plug 'vimwiki/vimwiki', { 'branch': 'dev' }
-Plug 'mattn/calendar-vim'
+" --- LanguageTool ---
+"  Install languagetool with sudo pacman -S languagetool
+Plug 'dpelle/vim-LanguageTool'
+let g:languagetool_jar='/usr/share/java/languagetool/languagetool-commandline.jar'
+
+" Set language tool comandline server
+" let g:languagetool_jar='$HOME/bin/languagetool/languagetool-commandline.jar'
+
+
 " --- If taskwarior and time warrior is installed use the plugins.
 if executable("task")
     Plug 'tools-life/taskwiki'
@@ -176,14 +211,19 @@ Plug 'joshdick/onedark.vim'
 " \ 'colorscheme': 'onedark',
 " \ }
 
-"*****************************************************************************
-"" Custom bundles
-"*****************************************************************************
+" --- Programming IDE YCM --
 "You complete me
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clangd-completer --ninja --rust-completer' }
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clangd-completer  --rust-completer' }
 
 " ycm keybindings to fix tab completion
 Plug 'ervandew/supertab'
+
+" --- VimWiki ---
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown'
+Plug 'mzlogin/vim-markdown-toc'
+Plug 'vimwiki/vimwiki', { 'branch': 'dev' }
+Plug 'mattn/calendar-vim'
 
 " c
 "Plug 'vim-scripts/c.vim', {'for': ['c', 'cpp']}
@@ -206,9 +246,9 @@ let g:arduino_home_dir = $HOME . ".arduino15"
 "*****************************************************************************
 
 "" Include user's extra bundle
-if filereadable(expand("~/.vimrc.local.bundles"))
-  source ~/.vimrc.local.bundles
-endif
+" if filereadable(expand("~/.vimrc.local.bundles"))
+"   source ~/.vimrc.local.bundles
+" endif
 
 
 call plug#end()
@@ -236,7 +276,6 @@ let g:tex_matchcheck= '[{}]'
 
 "" vimspector multi language graphical debugger keyboard setup
 " let g:vimspector_enable_mappings = 'HUMAN' "<- Leve comented have own config.
-let g:vimspector_install_gadgets = [ 'debugpy', 'vscode-bash-debug', 'CodeLLDB' ]
 
 "" Activity watch start
 " autocmd VimEnter * AWStart
@@ -252,7 +291,13 @@ augroup vimrc-python
       \ cinwords=if,elif,else,for,while,try,except,finally,def,class,with
 augroup END
 
-" Conceallevel set to 1
-autocmd BufEnter *.tex set conceallevel=1
-autocmd BufEnter *.tex set concealcursor=n
 autocmd BufRead,BufNewFile *.md set filetype=markdown
+
+" Conceallevel set to 1
+augroup vim-conceallevel
+    autocmd BufEnter *.tex,*.md  set conceallevel=1
+    autocmd BufEnter *.tex,*.md set concealcursor=n
+augroup END
+
+" Disable folding
+set foldlevel=99

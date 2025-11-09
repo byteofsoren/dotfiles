@@ -157,25 +157,12 @@ nnoremap <Leader>o :.Gbrowse<CR>
 " nnoremap <silent> <F3> :NERDTreeToggle<CR>
 
 "" Insert the current date using F5
-inoremap <F5> <C-R>=strftime("diary/%Y-%m-%d-%a")<CR>
-
-" Spellcheck change language between en_us and sv with F7 and F8
-nnoremap <silent> <F7> :echo ToggleSpell("en_us")<CR>			" Toggle English spell.
-nnoremap <silent> <F8> :echo ToggleSpell("sv")<CR>				" Toggle Swedish spell.
+" inoremap <F5> <C-R>=strftime("diary/%Y-%m-%d-%a")<CR>
 
 
-" terminal emulation open terminal with <space> sh
-" if g:vim_bootstrap_editor == 'nvim'
-"   nnoremap <silent> <leader>sh :terminal<CR>
-" else
-"   nnoremap <silent> <leader>sh :VimShellCreate<CR>
-" endif
 
 " For macroing the moonlander kb : do not work, thus mapping ; to :
 nnoremap ; :
-" nnoremap : ; " swap : -> ;        Not needed
-" vnoremap ; : " Visual mode ; -> : Not needed
-" vnoremap : ; " Visual swap : -> ; Not needed
 
 " Duble hitt ; to get regular ;
 noremap ;; ;

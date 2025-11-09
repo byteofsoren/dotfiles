@@ -35,16 +35,25 @@ if exists(':ALEInfo')
     " Enable fixing files on save
     let g:ale_fix_on_save = 1
 
+
     " Set preferred linters for Python, C/C++, BASH, and Rust
     " OBSERVE all packages like flake8, shfmt and so on needs to be installed
     let g:ale_linters = {
     \   'python': ['flake8', 'mypy'],
-    \   'c': ['gcc'],
-    \   'cpp': ['g++'],
+    \   'c': ['gcc','flawfinder'],
+    \   'cpp': ['g++','flawfinder'],
     \   'sh': ['shellcheck'],
     \   'rust': ['rustc'],
-    \   'markdown': ['cspell'],
+    \   'tex': ['lacheck'],
+    \   'text': ['languagetool', 'lacheck'],
+    \   'markdown': ['languagetool'],
     \}
+    " \   'markdown': ['cspell'],
+
+    " Set languages on cspell to se, en
+    let g:ale_markdown_cspell_options = ' --locale=sv,en '
+    let g:ale_languagetool_options = '--languagemodel /path/to/ngrams --api http://localhost:8081/v2/check'
+
 
     " Set preferred fixers for Python, C/C++, BASH, and Rust
     " \   'c': ['clangd'],
@@ -53,6 +62,7 @@ if exists(':ALEInfo')
     \   'python': ['autopep8', 'isort'],
     \   'sh': ['shfmt'],
     \   'rust': ['rustfmt'],
+    \   'tex': ['latexindent'],
     \}
 
     " Configure signs for errors and warnings
