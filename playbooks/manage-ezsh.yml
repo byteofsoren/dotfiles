@@ -1,0 +1,64 @@
+---
+- name: Manage eZSH configuration (dotfiles style)
+  hosts: localhost
+  connection: local
+  gather_facts: true
+  tags: [zsh]
+
+  vars:
+    ezsh_config_dir: "{{ ansible_env.HOME }}/.config/ezsh"
+    ezsh_repo_dir: "{{ ansible_env.HOME }}/extrepos"
+    ezsh_repo_path: "{{ ezsh_repo_dir }}/ezsh"
+    # Required: pass this via -e when running the playbook
+    ezsh_repo_url: "{{ ezsh_repo_url | mandatory }}"
+    # Optional: branch, tag, or commit (default: main)
+    ezsh_repo_version: "{{ ezsh_repo_version | default('main') }}"
+
+  tasks:
+
+    - name: Ensure ~/repos directory exists
+      ansible.builtin.file:
+        path: "{{ ezsh_repo_dir }}"
+        state: directory
+        mode: '0755'
+
+    - name: Clone or update the ezsh-conf repository (idempotent)
+      when: ezsh_state | default('present') == 'present'
+      ansible.builtin.git:
+        repo: "{{ ezsh_repo_url }}"
+        dest: "{{ ezsh_repo_path }}"
+        version: "{{ ezsh_repo_version }}"
+        update: true
+        force: true
+        depth: 1          # shallow clone = faster
+        recursive: false  # set to true if you use git submodules
+
+    - name: Remove LazyVim symlink (equivalent to old -R flag)
+      when: ezsh_state | default('present') == 'absent'
+      ansible.builtin.file:
+        path: "{{ ezsh_config_dir }}"
+        state: absent
+
+    - name: Install / ensure LazyVim symlink (equivalent to old -s flag)
+      when: ezsh_state | default('present') == 'present'
+      block:
+
+        - name: Check current state of ~/.config/ezsh
+          ansible.builtin.stat:
+            path: "{{ ezsh_config_dir }}"
+          register: ezsh_stat
+
+        - name: Remove any existing non-symlink ~/.config/ezsh
+          when:
+            - ezsh_stat.stat.exists
+            - not ezsh_stat.stat.islnk
+          ansible.builtin.file:
+            path: "{{ ezsh_config_dir }}"
+            state: absent
+
+        - name: Create symlink ~/.config/ezsh → ~/repos/ezsh-conf
+          ansible.builtin.file:
+            src: "{{ ezsh_repo_path }}"
+            dest: "{{ ezsh_config_dir }}"
+            state: link
+            force: true

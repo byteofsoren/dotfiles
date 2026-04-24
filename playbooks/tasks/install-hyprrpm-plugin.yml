@@ -1,0 +1,21 @@
+# === NEW REUSABLE TASK FILE: Save as `tasks/install-hyprpm-plugin.yml` ===
+# (Generic, loop-friendly, no play header)
+
+---
+- name: Update hyprpm plugin index
+  command: hyprpm update
+  changed_when: false   # update is idempotent and we don't want to mark the whole play as changed every time
+
+- name: Add the Hyprland plugin repository
+  command: hyprpm add "{{ plugin_repo_url }}"
+  changed_when: true
+
+- name: Enable the plugin
+  command: hyprpm enable "{{ plugin_name }}"
+  changed_when: true
+
+- name: Show hyprpm output (for debugging)
+  debug:
+    var: ansible_result.stdout_lines | default([])
+    verbosity: 0
+  when: ansible_result is defined

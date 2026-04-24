@@ -1,0 +1,114 @@
+---
+- name: 🚀 Main Dotfiles Setup - Development Environment + LazyVim
+  hosts: dotfiles
+  gather_facts: true
+
+  vars_files:
+    - vars/credentials.yml
+
+  vars:
+
+    # ── Control what runs (override with -e) ─────────────────────
+    install_ml4w: "no"                    # Change to "yes" with -e "install_ml4w=yes"
+    ml4w_release: "stable"                # "stable" or "rolling"
+    run_neovim: true
+    run_dev_env: false
+    # home_dir: "{{ lookup('env' 'HOME') }}"
+
+
+    ext_repos_setup:
+      - repo_url: "https://github.com/jotyGill/ezsh.git"
+        setup_script: "install.sh -n"
+        repo_version: "master"
+    hyprland_plugins:
+      - plugin_repo_url: "https://github.com/shezdy/hyprsplit.git"
+        plugin_name: "hyprsplit"
+      # Example
+      # - plugin_repo_url: "https://github.com/user/repo.git"
+      #   plugin_name: "name"
+    config_copy:
+      - config_source: "../configs/hypr"
+        config_dest: "{{ ansible_facts.env.HOME }}/.config/hypr"
+
+      - config_source: "../configs/.tmux.conf"
+        config_dest: "{{ ansible_facts.env.HOME }}/.tmux.conf"
+
+      # Example for copy
+      # -config_source: "../configs/alacritty"
+      #  config_dest: "{{ ansible_facts.env.HOME }}/.config/alacratty"
+
+  pre_tasks:
+    - name: Show what will be executed
+      ansible.builtin.debug:
+        msg: |
+          =============================================
+          Dotfiles main run
+          • ML4W Hyprland     : {{ install_ml4w }}
+          • Dev environment   : {{ run_dev_env | bool }}
+          • Neovim / LazyVim  : {{ run_neovim | bool }}
+          • Neovim state      : {{ neovim_state }}
+          =============================================
+
+  tasks:
+    - name: Install GitHub credentials from vault
+      ansible.builtin.include_tasks: ./tasks/install-github-credentials.yml
+
+    - name: Install ML4W Hyprland (if user select yes)
+      ansible.builtin.include_tasks: tasks/install-ml4w-hyprland.yml
+      when: install_ml4w | lower == 'yes'
+      vars:
+        ml4w_release: "{{ ml4w_release }}"
+
+    # # ── Set Hyprland fact (needed for plugins + configs) ──
+    # - name: Check if Hyprland is installed
+    #   ansible.builtin.command: command -v Hyprland
+    #   register: hyprland_check
+    #   changed_when: false
+    #   ignore_errors: true
+    #
+    # - name: Set fact — is Hyprland installed?
+    #   set_fact:
+    #     hyprland_installed: "{{ hyprland_check.rc == 0 }}"
+
+
+    - name: Setup and install ext repos
+      ansible.builtin.include_tasks: tasks/clone-and-setup.yml
+      loop: "{{ ext_repos_setup }}"
+      loop_control:
+        loop_var: current_extrepo
+      vars:
+        repo_url: "{{ current_extrepo.repo_url }}"
+        setup_script: "{{ current_extrepo.setup_script }}"
+        repo_version: "{{ current_extrepo.repo_version | default('main') }}"
+
+    - name: Install each Hyprland plugin via hyprpm
+      ansible.builtin.include_tasks: ./tasks/install-hyprpm-plugin.yml   # ← fixed filename typo if needed
+      loop: "{{ hyprland_plugins | default([]) }}"
+      loop_control:
+        loop_var: current_plugin
+      vars:
+        plugin_repo_url: "{{ current_plugin.plugin_repo_url }}"
+        plugin_name: "{{ current_plugin.plugin_name }}"
+      when: hyprland_installed | default(false)
+
+    - name: Deploy each configuration from ../configs to ~/.config
+      ansible.builtin.include_tasks: tasks/copy-config.yml
+      loop: "{{ config_copy }}"
+      loop_control:
+        loop_var: current_config
+      vars:
+        config_source: "{{ current_config.config_source }}"
+        config_dest: "{{ current_config.config_dest }}"
+      when: hyprland_installed | default(false)
+
+- name: Import Neovim / LazyVim configuration playbook
+  ansible.builtin.import_playbook: manage-neovim.yml
+  when: run_neovim | bool
+  vars:
+    neovim_repo_url: "https://github.com/byteofsoren/nvim-conf.git"
+    neovim_repo_version: "main"
+    neovim_state: "present"
+
+- name: Import Development Environment playbook
+  ansible.builtin.import_playbook: setup-dev-env.yml
+  when: run_dev_env | bool

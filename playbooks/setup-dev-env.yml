@@ -1,0 +1,86 @@
+---
+- name: Setup Development Environment (C/C++, Python, Bash, Ansible + Neovim/Tmux/Zsh)
+  hosts: localhost
+  connection: local
+  gather_facts: true
+  become: true
+  tags: [dev-env]
+
+  vars:
+    packages_map:
+      Archlinux:
+        - base-devel          # C/C++ build tools (make, gcc, etc.)
+        - clang
+        - cmake
+        - gdb
+        - git
+        - neovim
+        - tmux
+        - zsh
+        - python
+        - python-pip
+        - python-virtualenv
+        - ansible
+        - shellcheck
+        - bash-completion
+
+      Debian:
+        - build-essential     # C/C++ (gcc, g++, make)
+        - cmake
+        - gdb
+        - git
+        - neovim
+        - tmux
+        - zsh
+        - python3
+        - python3-pip
+        - python3-venv
+        - ansible
+        - shellcheck
+        - bash-completion
+
+      RedHat:                 # Covers Fedora (and RHEL/CentOS Stream)
+        - gcc
+        - gcc-c++
+        - cmake
+        - make
+        - gdb
+        - git
+        - neovim
+        - tmux
+        - zsh
+        - python3
+        - python3-pip
+        - python3-venv
+        - ansible
+        - ShellCheck
+        - bash-completion
+
+  tasks:
+
+    - name: Update package cache (Debian-based)
+      when: ansible_facts['os_family'] == 'Debian'
+      ansible.builtin.apt:
+        update_cache: true
+        cache_valid_time: 3600
+
+    - name: Update package cache (Fedora / RedHat)
+      when: ansible_facts['os_family'] == 'RedHat'
+      ansible.builtin.dnf:
+        update_cache: ture
+
+    - name: Update package cache (Arch Linux)
+      when: ansible_facts['os_family'] == 'Archlinux'
+      ansible.builtin.pacman:
+        update_cache: true
+
+    - name: Install development packages for {{ ansible_facts['os_family'] }}
+      ansible.builtin.package:
+        name: "{{ packages_map[ansible_facts['os_family']] }}"
+        state: present
+      when: ansible_facts['os_family'] in packages_map
+
+    - name: Fail if unsupported distribution
+      when: ansible_facts['os_family'] not in packages_map
+      ansible.builtin.fail:
+        msg: "Unsupported OS family: {{ ansible_facts['os_family'] }}. This playbook supports Archlinux, Debian, and RedHat (Fedora)."

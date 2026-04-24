@@ -1,0 +1,31 @@
+# === NEW REUSABLE TASK FILE: Save as `playbooks/tasks/copy-config.yml` ===
+# (Generic, loop-friendly, no play header)
+
+---
+- name: Ensure parent of target config directory exists
+  file:
+    path: "{{ config_dest | dirname }}"
+    state: directory
+    mode: '0755'
+
+- name: Compute full source path from dotfiles root
+  set_fact:
+    full_config_src: "{{ (playbook_dir | dirname) ~ '/' ~ config_source }}"
+
+- name: "Deploy config → {{ config_dest | basename }} (overwrite if changed)"
+  copy:
+    src: "{{ full_config_src }}/"          # trailing / = copy *contents* of source dir
+    dest: "{{ config_dest }}/"             # trailing / = ensure target dir
+    owner: "{{ ansible_user_id }}"
+    group: "{{ ansible_user_gid | default(ansible_user_id) }}"
+    mode: '0644'                           # files
+    directory_mode: '0755'                 # directories
+    force: true
+    backup: false                           # change to yes if you want backups
+  register: config_copy_result
+
+- name: Show what was copied (only on change)
+  debug:
+    msg: "{{ config_copy_result.changed | ternary('UPDATED', 'unchanged') }} → {{ config_dest }}"
+    verbosity: 0
+  when: config_copy_result.changed | default(false)

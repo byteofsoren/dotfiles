@@ -1,0 +1,47 @@
+---
+- name: Gather distribution facts (if not already gathered)
+  setup:
+    gather_subset: min
+
+- name: Check supported distros for ML4W Hyprland
+  set_fact:
+    ml4w_supported: "{{ ansible_distribution in ['Archlinux', 'Fedora'] }}"
+
+- name: Warn on unsupported distro (Debian / Ubuntu / others)
+  debug:
+    msg: >
+      ⚠️  ML4W Hyprland is NOT officially supported on {{ ansible_distribution }}.
+      Hyprland has major compatibility issues on point-release distros like Debian.
+      The installer only fully supports Arch Linux, Fedora, and openSUSE Tumbleweed.
+      Continuing anyway may fail or leave an incomplete setup.
+  when: not ml4w_supported
+
+- name: Check if ML4W is already installed
+  stat:
+    path: "{{ ansible_env.HOME }}/.mydotfiles"
+  register: ml4w_check
+
+- name: Backup note before ML4W installation
+  debug:
+    msg: |
+      ML4W will:
+      • Install all Hyprland dependencies (5-15 min)
+      • Create ~/.mydotfiles and symlink everything to ~/.config
+      • Possibly overwrite existing configs
+      Make sure you have a backup of ~/.config!
+
+- name: Install ML4W Hyprland (stable or rolling release)
+  shell: |
+    bash <(curl -s https://ml4w.com/os/{{ ml4w_release | default('stable') }})
+  args:
+    executable: /bin/bash
+  register: ml4w_install_result
+  changed_when: true
+  when: not ml4w_check.stat.exists or (force_ml4w_reinstall | default(false) | bool)
+  ignore_errors: "{{ not ml4w_supported }}"   # don't stop playbook on Debian
+
+- name: Show ML4W installation result
+  debug:
+    var: ml4w_install_result.stdout_lines
+    verbosity: 0
+  when: ml4w_install_result is defined

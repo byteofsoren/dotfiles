@@ -1,0 +1,47 @@
+# === FIXED REUSABLE TASK FILE: playbooks/tasks/clone-and-setup.yml ===
+# No more deprecation warnings + works with repos that use 'master' or 'main'
+
+---
+- name: Ensure the target directory $HOME/extrepos/ exists
+  file:
+    path: "{{ ansible_facts.env.HOME }}/extrepos"
+    state: directory
+    mode: '0755'
+
+- name: Clone (or update) the Git repository
+  git:
+    repo: "{{ repo_url }}"
+    dest: "{{ ansible_facts.env.HOME }}/extrepos/{{ repo_url | basename | regex_replace('\\.git$', '') }}"
+    version: "{{ repo_version | default(omit) }}"   # ← uses remote default branch (main/master/etc.)
+    update: true
+    force: true
+    depth: 1
+
+- name: Set fact for the cloned repository path
+  set_fact:
+    repo_dir: "{{ ansible_facts.env.HOME }}/extrepos/{{ repo_url | basename | regex_replace('\\.git$', '') }}"
+
+- name: Make the setup script executable (in case it isn't)
+  file:
+    path: "{{ repo_dir }}/{{ setup_script.split(' ')[0] }}"
+    mode: '0755'
+  when: setup_script is defined
+
+- name: Split setup_script into executable + arguments
+  set_fact:
+    setup_executable: "{{ setup_script.split(' ')[0] }}"
+    setup_args: "{{ setup_script.split(' ')[1:] | join(' ') | default(omit) }}"
+
+- name: Run the setup script (supports "setup.sh -s" or just "setup")
+  command:
+    argv:
+      - "./{{ setup_executable }}"
+      - "{{ setup_args }}"
+    chdir: "{{ repo_dir }}"
+  register: setup_result
+  changed_when: true
+
+- name: Show output from the setup script
+  debug:
+    var: setup_result.stdout_lines
+    verbosity: 0

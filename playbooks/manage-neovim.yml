@@ -1,0 +1,63 @@
+---
+- name: Manage LazyVim Neovim configuration (dotfiles style)
+  hosts: localhost
+  connection: local
+  gather_facts: true
+  tags: [neovim]
+
+  vars:
+    neovim_config_dir: "{{ ansible_facts.env.HOME }}/.config/nvim"
+    neovim_repos_dir: "{{ ansible_facts.env.HOME }}/repos"
+    neovim_repo_path: "{{ neovim_repos_dir }}/nvim-conf"
+    # Optional: branch / tag / commit (default: main)
+    neovim_repo_version: "{{ neovim_repo_version | default('main') }}"
+
+  # neovim_repo_url is inherited from main.yml (no self-reference)
+
+  tasks:
+    - name: Ensure ~/repos directory exists
+      ansible.builtin.file:
+        path: "{{ neovim_repos_dir }}"
+        state: directory
+        mode: '0755'
+
+    - name: Clone or update the nvim-conf repository (idempotent)
+      ansible.builtin.git:
+        repo: "{{ neovim_repo_url }}"          # ← comes safely from main.yml
+        dest: "{{ neovim_repo_path }}"
+        version: "{{ neovim_repo_version }}"
+        update: true
+        force: true
+        depth: 1
+        recursive: false
+      when: neovim_state | default('present') == 'present'
+
+    - name: Remove LazyVim symlink (equivalent to old -R flag)
+      when: neovim_state | default('present') == 'absent'
+      ansible.builtin.file:
+        path: "{{ neovim_config_dir }}"
+        state: absent
+
+    - name: Install / ensure LazyVim symlink (equivalent to old -s flag)
+      when: neovim_state | default('present') == 'present'
+      block:
+
+        - name: Check current state of ~/.config/nvim
+          ansible.builtin.stat:
+            path: "{{ neovim_config_dir }}"
+          register: nvim_stat
+
+        - name: Remove any existing non-symlink ~/.config/nvim
+          when:
+            - nvim_stat.stat.exists
+            - not nvim_stat.stat.islnk
+          ansible.builtin.file:
+            path: "{{ neovim_config_dir }}"
+            state: absent
+
+        - name: Create symlink ~/.config/nvim → ~/repos/nvim-conf
+          ansible.builtin.file:
+            src: "{{ neovim_repo_path }}"
+            dest: "{{ neovim_config_dir }}"
+            state: link
+            force: true
